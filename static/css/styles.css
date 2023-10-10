@@ -1,0 +1,149 @@
+
+/*.register {*/
+/*    border: black 2px solid;*/
+/*    width: 500px;*/
+/*    display: flex;*/
+/*    height: 500px;*/
+/*}*/
+
+/*.login {*/
+
+/*}*/
+
+/* Style for the form container */
+.register {
+  width: 300px;
+  margin: 7% auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style for the profile heading */
+.profile {
+  text-align: center;
+  color: #333;
+}
+
+/* Style for the form elements */
+.form div {
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+/* Style for labels */
+.form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Style for input fields */
+.form input[type="text"],
+.form input[type="password"],
+.form input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Style for the error messages */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Style for the submit button */
+.form button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+/* Hover effect for the submit button */
+.form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+/* Style for the login container */
+.login {
+  width: 300px;
+  margin: 7% auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style for the login heading */
+.login h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Style for the form elements */
+.login form {
+  margin-top: 10px;
+}
+
+/* Style for labels */
+.login label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Style for input fields */
+.login input[type="text"],
+.login input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Style for the submit button */
+.login button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Hover effect for the submit button */
+.login button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Style for the "Don't have an account" link */
+.login p {
+  text-align: center;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+/* Style for the registration link within the paragraph */
+.login p a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Hover effect for the registration link */
+.login p a:hover {
+  text-decoration: underline;
+}

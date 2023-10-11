@@ -1,0 +1,24 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="profile-details-container">
+  <h2 class="profile-details-title">Profile Details</h2>
+  <div class="profile-details">
+    {% if profile %}
+      <p><strong>Name:</strong> {{ profile.first_name }} {{ profile.last_name }}</p>
+      <p><strong>Username:</strong> {{ request.user.username }}</p>
+      <p><strong>User Type:</strong> {{ request.user.get_user_type_display }}</p>
+      <p><strong>Email:</strong> {{ request.user.email }}</p>
+      {% if profile.phone_number %}
+        <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
+      {% endif %}
+      {% if profile.department %}
+        <p><strong>Department:</strong> {{ profile.department }}</p>
+      {% endif %}
+    {% else %}
+      <p>No profile information available.</p>
+    {% endif %}
+  </div>
+  <a class="edit-profile-button" href="{% url 'profile edit' %}">Edit Profile</a>
+</div>
+{% endblock %}

@@ -14,9 +14,9 @@ class AddCandidateForm(forms.ModelForm):
 class InterviewForm(forms.ModelForm):
     class Meta:
         model = Interview
-        fields = ['candidate', 'interviewer', 'date_time', 'time', 'status']
+        fields = ['candidate', 'interviewer', 'date', 'time', 'status']
 
-    date_time = forms.DateField(
+    date = forms.DateField(
         initial=datetime.now().strftime("%Y-%m-%d"),
         widget=forms.widgets.DateInput(
             attrs={'type': 'date'})

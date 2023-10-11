@@ -68,7 +68,7 @@
 /* Style for the form container */
 .register {
   width: 300px;
-  margin: 7% auto;
+  margin: 3% auto;
   padding: 20px;
   background-color: #f2f2f2;
   border: 1px solid #ddd;
@@ -133,7 +133,7 @@
 /* Style for the login container */
 .login {
   width: 300px;
-  margin: 7% auto;
+  margin: 3% auto;
   padding: 20px;
   background-color: #f2f2f2;
   border: 1px solid #ddd;
@@ -208,4 +208,109 @@
 .btn-register {
   display: flex;
   justify-content: space-between;
+}
+
+
+/* Center the form on the page */
+.edit-profile-container {
+  width: 30%;
+  margin: 3% auto;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.edit-profile-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.edit-profile-form {
+  display: block;
+  width: 100%;
+}
+
+/* Style form fields and buttons */
+.edit-profile-form input[type="text"],
+.edit-profile-form input[type="email"],
+.edit-profile-form select {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.save-changes-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-changes-button:hover {
+  background-color: #0056b3;
+}
+
+/* Back to Profile link */
+.back-to-profile-link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.back-to-profile-link:hover {
+  color: #0056b3;
+}
+
+
+/* Profile Details */
+
+.profile-details-container {
+  width: 60%;
+  margin: 3% auto;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.profile-details-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile-details p {
+  text-align: left;
+  margin: 8px 0;
+}
+
+.profile-details p strong {
+  font-weight: bold;
+}
+
+.profile-details p:last-child {
+  margin-bottom: 0;
+}
+
+.edit-profile-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff; /* Button color */
+  color: #fff; /* Text color */
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-profile-button:hover {
+  background-color: #0056b3; /* Button color on hover */
 }

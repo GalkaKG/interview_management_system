@@ -26,12 +26,12 @@ class Interview(models.Model):
     )
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
-    date_time = models.DateField()
-    time = models.TimeField(default='00:00:00')
-    status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)  # You can define interview status choices
+    date = models.DateField()
+    time = models.TimeField()
+    status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)
 
     def __str__(self):
-        return f"Interview for {self.candidate} with {self.interviewer} on {self.date_time}"
+        return f"Interview for {self.candidate} with {self.interviewer} on {self.date} in {self.time}"
 
 
 class InterviewFeedback(models.Model):

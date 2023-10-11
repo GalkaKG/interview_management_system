@@ -26,7 +26,8 @@ class Interview(models.Model):
     )
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
-    date_time = models.DateTimeField()
+    date_time = models.DateField()
+    time = models.TimeField(default='00:00:00')
     status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)  # You can define interview status choices
 
     def __str__(self):

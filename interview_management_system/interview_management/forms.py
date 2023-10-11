@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 
 from interview_management_system.interview_management.models import Candidate, Interview
@@ -12,8 +14,15 @@ class AddCandidateForm(forms.ModelForm):
 class InterviewForm(forms.ModelForm):
     class Meta:
         model = Interview
-        fields = ['candidate', 'interviewer', 'date_time', 'status']
+        fields = ['candidate', 'interviewer', 'date_time', 'time', 'status']
 
-    widgets = {
-        'date_time': forms.DateInput(attrs={'type': 'date'}),
-    }
+    date_time = forms.DateField(
+        initial=datetime.now().strftime("%Y-%m-%d"),
+        widget=forms.widgets.DateInput(
+            attrs={'type': 'date'})
+    )
+
+    time = forms.CharField(
+        widget=forms.TimeInput(attrs={'type': 'time'})
+    )
+

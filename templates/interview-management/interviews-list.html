@@ -1,7 +1,33 @@
+<!-- interviews-style.html -->
+
 {% extends 'base/index.html' %}
 
 {% block content %}
-        <div>
-            <h2>Interviews:</h2>
-        </div>
+  <h1>Interviews</h1>
+<div>
+  <table class="interview-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Candidate</th>
+        <th>Interviewer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for interview in interviews %}
+      <tr>
+        <td>{{ interview.date }}</td>
+        <td>{{ interview.time }}</td>
+        <td class="{{ interview.status|lower }}">{{ interview.get_status_display }}</td>
+        <td>{{ interview.candidate }}</td>
+        <td>{{ interview.interviewer }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
 {% endblock %}

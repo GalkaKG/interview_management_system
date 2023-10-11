@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -153,5 +154,15 @@ LOGIN_URL = '/login/'
 # KAFKA_SERVER = 'localhost:9092'
 # KAFKA_TOPIC = 'my_topic'
 
+
+# Configure Celery
 CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 CELERY_RESULT_BACKEND = 'rpc://'
+
+# Configure Celery Beat for scheduling
+CELERY_BEAT_SCHEDULE = {
+    'update_interview_statuses': {
+        'task': 'your_app.tasks.update_interview_statuses',
+        'schedule': timedelta(minutes=30),  # Run every 30 minutes
+    },
+}

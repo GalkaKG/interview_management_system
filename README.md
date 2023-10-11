@@ -28,7 +28,6 @@ The Interview Management System is a powerful tool designed to simplify and auto
 - Create and manage job positions.
 - Keep track of candidate details.
 - Assign interviewers to interviews.
-- Notify participants with automated email reminders.
 
 ## Installation
 

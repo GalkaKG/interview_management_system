@@ -1,3 +1,35 @@
+# tasks.py
+
+from celery import Celery
+from datetime import datetime, timedelta
+
+from interview_management_system.interview_management.models import Interview
+
+app = Celery('interview_management')
+app.config_from_object('django.conf:settings')
+
+
+@app.task
+def update_interview_statuses():
+    now = datetime.now()
+    scheduled_interviews = Interview.objects.filter(
+        status='Scheduled',
+        date__lte=now.date(),
+        time__lte=(now - timedelta(minutes=30)).time()
+    )
+
+    for interview in scheduled_interviews:
+        interview.status = 'Completed'
+        interview.save()
+
+        # Send a message to the interviewer to prompt for feedback using RabbitMQ.
+        # You'll need to implement your own logic to send messages.
+
+
+
+
+
+
 from celery import shared_task
 
 from interview_management_system.interview_management.models import Interview

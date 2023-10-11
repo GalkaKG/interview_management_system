@@ -39,17 +39,23 @@ def logout_view(request):
 
 @login_required
 def profile_details(request):
+    context = {}
     if request.user.user_type == 'interviewer':
-        profile = Interviewer.objects.get(user=request.user)
+        try:
+            profile = Interviewer.objects.get(user=request.user)
+            context['profile'] = profile
+        except Interviewer.DoesNotExist:
+            return redirect('home')
     elif request.user.user_type == 'hr':
-        profile = HR.objects.get(user=request.user)
+        try:
+            profile = HR.objects.get(user=request.user)
+            context['profile'] = profile
+        except HR.DoesNotExist:
+            return redirect('home')
     else:
-        raise Http404("Profile not found for this user type")
-        # profile = None
+        # raise Http404("Profile not found for this user type")
+        return redirect('home')
     # profile = request.user
-    context = {
-        'profile': profile,
-    }
 
     return render(request, 'auth/profile-details.html', context)
 

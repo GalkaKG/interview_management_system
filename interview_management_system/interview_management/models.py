@@ -35,9 +35,16 @@ class Interview(models.Model):
 
 
 class InterviewFeedback(models.Model):
+    RESULT = (
+        ('Positive', 'Positive'),
+        ('Negative', 'Negative'),
+        ('Canceled', 'Canceled'),
+        ('None', 'None'),
+    )
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     feedback_text = models.TextField()
     rating = models.DecimalField(max_digits=3, decimal_places=2)
+    overall_result = models.CharField(choices=RESULT, default='None')
 
 
 class Notification(models.Model):

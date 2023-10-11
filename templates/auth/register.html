@@ -1,13 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-<body>
+{% extends 'base/index.html' %}
+
+{% block content %}
      <div class="register">
         <h1 class="profile">Register</h1>
         <form class="form" id="create-profile" method="post" action="">
@@ -28,8 +21,59 @@
             {% if form.errors %}
             {% endif %}
             {% csrf_token %}
+            <div class="btn-register">
             <button type="submit">Submit</button>
+{#             <p>You already have an account? <a href="{% url 'login' %}" onclick="toggleForm('login-form')">Login</a></p>#}
+            <p><a href="{% url 'login' %}" onclick="toggleForm('login-form')">Login</a></p>
+            </div>
         </form>
+
     </div>
-</body>
-</html>
+{% endblock %}
+
+
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <title>Login and Registration</title>#}
+{#     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>#}
+{#</head>#}
+{#<body>#}
+{#    <div class="form-container" id="login-form">#}
+{#        <h2>Login</h2>#}
+{#        <form method="post" action="{% url 'login' %}">#}
+{#            <!-- Login form fields here -->#}
+{#            <label for="login-username">Username:</label>#}
+{#            <input type="text" id="login-username" name="login-username" required>#}
+{##}
+{#            <label for="login-password">Password:</label>#}
+{#            <input type="password" id="login-password" name="login-password" required>#}
+{##}
+{#            {% csrf_token %}#}
+{#            <button type="submit">Login</button>#}
+{#        </form>#}
+{#        <p>Don't have an account? <a href="#" onclick="toggleForm('register-form')">Register</a></p>#}
+{#    </div>#}
+{##}
+{#    <div class="form-container" id="register-form">#}
+{#        <h2>Register</h2>#}
+{#        <form method="post" action="{% url 'register' %}">#}
+{#            <!-- Registration form fields here -->#}
+{#            <label for="register-username">Username:</label>#}
+{#            <input type="text" id="register-username" name="register-username" required>#}
+{##}
+{#            <label for="register-email">Email:</label>#}
+{#            <input type="text" id="register-email" name="register-email" required>#}
+{##}
+{#            <label for="register-password">Password:</label>#}
+{#            <input type="password" id="register-password" name="register-password" required>#}
+{##}
+{#            {% csrf_token %}#}
+{#            <button type="submit">Register </button>#}
+{#        </form>#}
+{#        <p>Already have an account? <a href="#" onclick="toggleForm('login-form')">Login</a></p>#}
+{#    </div>#}
+{##}
+{#    <script src="{% static 'js/toggleForm.js' %}"></script>#}
+{#</body>#}
+{#</html>#}

@@ -1,0 +1,29 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+    <head>
+        <nav>
+            <h2></h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="">Schedule Interview</a></li>
+                <li><a href="">View Upcoming Interviews</a></li>
+                <li><a href="">Add New Candidate</a></li>
+                <li><a href="">View Candidates</a></li>
+                 <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+    </head>
+    <section class="content">
+        <div class="welcome">
+            <h1>Welcome to the Interview Management System</h1>
+            <p>Manage your interviews efficiently with our system.</p>
+        </div>
+        <div class="features">
+            <!-- Add information about your system's features here -->
+        </div>
+    </section>
+    <footer>
+
+    </footer>
+{% endblock %}

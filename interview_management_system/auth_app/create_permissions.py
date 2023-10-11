@@ -23,6 +23,7 @@ class Command(BaseCommand):
             group.permissions.add(can_view_candidate)
             if user_type in ['hr', 'admin']:
                 group.permissions.add(can_schedule_interview)
+                group.permissions.add(can_view_candidate)
 
         self.stdout.write(self.style.SUCCESS('Custom permissions created and assigned.'))
 

@@ -12,12 +12,6 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
 
-        # # Create an associated user type instance
-        # if user_type == 'interviewer':
-        #     Interviewer.objects.create(user=user, **extra_fields)
-        # elif user_type == 'hr':
-        #     HR.objects.create(user=user, **extra_fields)
-
         return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):
@@ -78,6 +72,18 @@ class HR(models.Model):
     last_name = models.CharField(max_length=30, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     department = models.CharField(max_length=50, blank=True, null=True, choices=DEPARTMENT_CHOICES)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Administrator(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    department = models.CharField(max_length=50, blank=True, null=True, choices=DEPARTMENT_CHOICES)
+    is_superuser = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username

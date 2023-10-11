@@ -1,0 +1,14 @@
+.user-feedback {
+    display: flex;
+    align-items: center;
+    gap: 30%;
+}
+
+.user-feedback a {
+    text-decoration: none;
+    color: #254d5c;
+}
+
+.user-feedback a:hover {
+    color: #007BFF;
+}

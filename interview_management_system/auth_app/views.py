@@ -46,7 +46,7 @@ def profile_details(request):
     else:
         raise Http404("Profile not found for this user type")
         # profile = None
-
+    # profile = request.user
     context = {
         'profile': profile,
     }

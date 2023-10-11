@@ -62,7 +62,7 @@
 
 .add-candidate-container form input[type="text"],
 .add-candidate-container form input[type="email"] {
-    width: 100%;
+    width: 97%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;

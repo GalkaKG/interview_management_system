@@ -19,6 +19,7 @@ nav {
     padding: 0;
     margin: 0;
     display: flex;
+    justify-content: space-evenly;
     background-color: #254d5c;
 }
 
@@ -48,11 +49,17 @@ nav a:hover {
     margin: 0 auto;
     padding: 20px;
     height: 75vh;
+    display: flex;
 }
 
 .welcome {
     text-align: center;
     margin-top: 20px;
+
+}
+
+.welcome h1 {
+    margin: 10% 50px;
 }
 
 h1 {
@@ -95,4 +102,6 @@ footer a:hover, footer i:hover {
     color: #007BFF;
 }
 
-
+img {
+    width: 400px;
+}

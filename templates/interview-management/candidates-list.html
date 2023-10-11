@@ -5,7 +5,11 @@
   <h2>Candidates List</h2>
   <ul>
     {% for candidate in candidates %}
-      <li>{{ candidate.first_name }} {{ candidate.last_name }}</li>
+        <div class="user-feedback">
+          <li>{{ candidate.first_name }} {{ candidate.last_name }}</li>
+          <a href="{% url 'feedback' %}">Feedback</a>
+{#          <a href="#">Status Interview: </a>#}
+        </div>
     {% endfor %}
   </ul>
 </div>

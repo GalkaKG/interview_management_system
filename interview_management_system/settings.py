@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Apps
     'interview_management_system.auth_app',
     'interview_management_system.interview_management',
+    'interview_management_system.api',
 
     # Third party apps
     'rest_framework',
@@ -149,5 +150,8 @@ OAUTH2_PROVIDER = {
 LOGIN_URL = '/login/'
 
 # Set Apache Kafka
-KAFKA_SERVER = 'localhost:9092'
-KAFKA_TOPIC = 'my_topic'
+# KAFKA_SERVER = 'localhost:9092'
+# KAFKA_TOPIC = 'my_topic'
+
+CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
+CELERY_RESULT_BACKEND = 'rpc://'

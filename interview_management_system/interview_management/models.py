@@ -1,6 +1,6 @@
 from django.db import models
 
-from interview_management_system.auth_app.models import Interviewer
+from interview_management_system.auth_app.models import Interviewer, CustomUser
 
 
 class Candidate(models.Model):
@@ -40,3 +40,11 @@ class InterviewFeedback(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2)
 
 
+class Notification(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    content = models.CharField(max_length=255)
+    is_read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content

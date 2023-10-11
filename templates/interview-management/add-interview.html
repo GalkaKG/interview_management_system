@@ -1,0 +1,13 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="add-interview-container">
+    <h2>Add New Interview</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Interview</button>
+    </form>
+    <a href="">Back to Interview List</a>
+</div>
+{% endblock %}

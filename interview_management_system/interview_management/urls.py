@@ -8,7 +8,10 @@ router.register(r'interviews', views.InterviewViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/', MyApiView.as_view(), name="endpoint")
+    path('add-candidate/', views.add_candidate, name="add candidate"),
+    path('candidate-list/', views.candidate_list, name='candidate list'),
+    path('add-interview/', views.add_interview, name='add interview'),
+    path('api/', MyApiView.as_view(), name="endpoint"),
 ]
 
 

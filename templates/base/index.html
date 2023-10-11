@@ -8,6 +8,23 @@
     <title>Interview Management System</title>
 </head>
 <body>
+<head>
+<nav>
+    <h2></h2>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'add interview' %}">Schedule Interview</a></li>
+        <li><a href="">View Upcoming Interviews</a></li>
+        <li><a href="{% url 'add candidate' %}">Add New Candidate</a></li>
+        <li><a href="{% url 'candidate list' %}">View Candidates</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+</head>
     {% block content %}
     {% endblock %}
 </body>

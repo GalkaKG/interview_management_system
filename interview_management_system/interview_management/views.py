@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Interview
+from .forms import AddCandidateForm, InterviewForm
+from .models import Interview, Candidate
 from .serializers import InterviewSerializer
 
 
@@ -22,9 +23,39 @@ class MyApiView(APIView):
         pass
 
 
+def add_candidate(request):
+    if request.method == 'POST':
+        form = AddCandidateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('candidate list')
+
+    else:
+        form = AddCandidateForm()
+    context = {
+        "form": form
+    }
+    return render(request, "interview-management/add-candidate.html", context)
 
 
+def candidate_list(request):
+    candidates = Candidate.objects.all()
+    context = {
+        'candidates': candidates
+    }
+    return render(request, 'interview-management/candidates-list.html', context)
 
+
+def add_interview(request):
+    if request.method == 'POST':
+        form = InterviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('interview_list')
+    else:
+        form = InterviewForm()
+
+    return render(request, 'interview-management/add-interview.html', {'form': form})
 
 
 

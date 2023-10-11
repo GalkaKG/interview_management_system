@@ -1,0 +1,83 @@
+/* styles.css */
+
+/* Style the candidate list container */
+.candidate-list {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the candidate list header */
+.candidate-list h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Style the candidate list items */
+.candidate-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.candidate-list li {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Hover effect for list items */
+.candidate-list li:hover {
+    background-color: #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+/* styles.css */
+
+.add-candidate-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-candidate-container h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.add-candidate-container form {
+    margin-top: 10px;
+}
+
+.add-candidate-container form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.add-candidate-container form input[type="text"],
+.add-candidate-container form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-candidate-container button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-candidate-container button:hover {
+    background-color: #0056b3;
+}

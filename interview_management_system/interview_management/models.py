@@ -8,7 +8,7 @@ class Candidate(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20)
-    resume_url = models.URLField(max_length=200)
+    resume_url = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -27,7 +27,7 @@ class Interview(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
     date_time = models.DateTimeField()
-    status = models.CharField(max_length=20, default='Scheduled')  # You can define interview status choices
+    status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)  # You can define interview status choices
 
     def __str__(self):
         return f"Interview for {self.candidate} with {self.interviewer} on {self.date_time}"

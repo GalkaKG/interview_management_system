@@ -1,0 +1,13 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+    <div class="add-candidate-container">
+    <h2>Add Candidate</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save Candidate</button>
+    </form>
+    <a href="{% url 'candidate list' %}">Back to Candidate List</a>
+  </div>
+{% endblock %}

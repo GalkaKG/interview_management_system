@@ -52,7 +52,7 @@ def add_interview(request):
         form = InterviewForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('candidate list')
+            return redirect('show interviews')
     else:
         form = InterviewForm()
 

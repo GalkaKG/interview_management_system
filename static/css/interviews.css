@@ -61,37 +61,37 @@
     text-decoration: underline;
 }
 
-  .interview-table {
+.interview-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-  }
+}
 
-  .interview-table th,
-  .interview-table td {
+.interview-table th,
+.interview-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-  }
+}
 
-  .interview-table th {
+.interview-table th {
     background-color: #f2f2f2;
-  }
+}
 
-  .Scheduled {
+.Scheduled {
     background-color: #ffd700; /* Yellow for Scheduled interviews */
-  }
+}
 
-  .InProgress {
+.InProgress {
     background-color: #00ff00; /* Green for In Progress interviews */
-  }
+}
 
-  .Completed {
+.Completed {
     background-color: #00a3e0; /* Blue for Completed interviews */
     color: #fff;
-  }
+}
 
-  .Canceled {
+.Canceled {
     background-color: #ff0000; /* Red for Canceled interviews */
     color: #fff;
-  }
+}

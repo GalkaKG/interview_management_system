@@ -47,11 +47,22 @@ class InterviewFeedback(models.Model):
     overall_result = models.CharField(choices=RESULT, default='None')
 
 
-class Notification(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    content = models.CharField(max_length=255)
-    is_read = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now_add=True)
+class Job(models.Model):
+    title = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    requirements = models.TextField(null=True, blank=True)
+    published_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.content
+        return self.title
+
+# class Notification(models.Model):
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     content = models.CharField(max_length=255)
+#     is_read = models.BooleanField(default=False)
+#     timestamp = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.content

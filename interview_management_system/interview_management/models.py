@@ -34,7 +34,7 @@ class Interview(models.Model):
         return f"Interview for {self.candidate} with {self.interviewer} on {self.date} in {self.time}"
 
 
-class InterviewFeedback(models.Model):
+class FeedbackInterview(models.Model):
     RESULT = (
         ('Positive', 'Positive'),
         ('Negative', 'Negative'),
@@ -44,7 +44,6 @@ class InterviewFeedback(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     feedback_text = models.TextField()
     rating = models.DecimalField(max_digits=3, decimal_places=2)
-    overall_result = models.CharField(choices=RESULT, default='None')
 
 
 class Job(models.Model):

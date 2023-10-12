@@ -3,38 +3,18 @@ info:
   title: Interview Management system
   version: 0.0.0
 paths:
-  /api/:
-    get:
-      operationId: api_retrieve
-      tags:
-      - api
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
   /api/candidates/:
     get:
       operationId: api_candidates_retrieve
       description: |-
-        List and create candidates.
+        List candidates.
 
-        List all candidates or create a new candidate.
+        List all candidates.
 
         Note:
         - For listing all candidates, send a GET request.
-        - For creating a new candidate, send a POST request with candidate details.
-
-        Example POST data for creating a candidate:
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john@example.com",
-            "phone_number": "123-456-7890"
-        }
 
         Responses:
-        - 201 Created: Candidate created successfully.
         - 400 Bad Request: Invalid input data.
       tags:
       - api
@@ -44,117 +24,11 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
-    post:
-      operationId: api_candidates_create
-      description: |-
-        List and create candidates.
-
-        List all candidates or create a new candidate.
-
-        Note:
-        - For listing all candidates, send a GET request.
-        - For creating a new candidate, send a POST request with candidate details.
-
-        Example POST data for creating a candidate:
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john@example.com",
-            "phone_number": "123-456-7890"
-        }
-
-        Responses:
-        - 201 Created: Candidate created successfully.
-        - 400 Bad Request: Invalid input data.
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
-  /api/candidates{format}:
-    get:
-      operationId: api_candidates_formatted_retrieve_2
-      description: |-
-        List and create candidates.
-
-        List all candidates or create a new candidate.
-
-        Note:
-        - For listing all candidates, send a GET request.
-        - For creating a new candidate, send a POST request with candidate details.
-
-        Example POST data for creating a candidate:
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john@example.com",
-            "phone_number": "123-456-7890"
-        }
-
-        Responses:
-        - 201 Created: Candidate created successfully.
-        - 400 Bad Request: Invalid input data.
-      parameters:
-      - in: path
-        name: format
-        schema:
-          type: string
-          enum:
-          - .json
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
-    post:
-      operationId: api_candidates_formatted_create
-      description: |-
-        List and create candidates.
-
-        List all candidates or create a new candidate.
-
-        Note:
-        - For listing all candidates, send a GET request.
-        - For creating a new candidate, send a POST request with candidate details.
-
-        Example POST data for creating a candidate:
-        {
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john@example.com",
-            "phone_number": "123-456-7890"
-        }
-
-        Responses:
-        - 201 Created: Candidate created successfully.
-        - 400 Bad Request: Invalid input data.
-      parameters:
-      - in: path
-        name: format
-        schema:
-          type: string
-          enum:
-          - .json
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
   /api/candidates/{id}/:
     get:
       operationId: api_candidates_retrieve_2
@@ -193,7 +67,11 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
     put:
       operationId: api_candidates_update
       description: |-
@@ -231,7 +109,11 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
+          description: ''
     delete:
       operationId: api_candidates_destroy
       description: |-
@@ -270,38 +152,286 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/candidates/{id}{format}:
+  /api/create-interview/:
+    post:
+      operationId: api_create_interview_create
+      description: |-
+        Create a new interview.
+
+        This endpoint allows you to create a new interview by providing the necessary data in the request body.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            Response: An HTTP response indicating the status of the request.
+
+        Example:
+            POST /api/create-interview/
+            {
+                "date": "2023-10-17",
+                "time": "10:00:00",
+                "status": "Scheduled",
+                "candidate": 2,
+                "interviewer": 2
+            }
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+          description: ''
+  /api/generating_reports/:
     get:
-      operationId: api_candidates_formatted_retrieve
+      operationId: api_generating_reports_retrieve
       description: |-
-        Retrieve, update, or delete a candidate by ID.
+        Generate and retrieve feedback reports for interviews.
 
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
+        This view allows generating and retrieving feedback reports for interviews. It returns a list of feedback reports
+        associated with interviews.
 
-        Example URL for a specific candidate:
-        /candidates/1/
+        Parameters:
+        - request: The HTTP request object.
 
-        Example PUT data for updating a candidate:
-        {
-            "first_name": "Updated John",
-            "last_name": "Updated Doe",
-            "email": "updated@example.com",
-            "phone_number": "987-654-3210"
-        }
+        Returns:
+        - Response: A JSON response containing a list of serialized feedback reports.
 
-        Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
-        - 400 Bad Request: Invalid input data.
-        - 404 Not Found: Candidate not found.
+        HTTP Methods:
+        - GET: Retrieve the list of feedback reports for interviews.
+
+        Example Request:
+        ```
+        GET /api/generating_reports/
+        ```
+
+        Example Response:
+        ```
+        [
+            {
+                "id": {report_id},
+                "interview": {interview_id},
+                "interviewer": {interviewer_id},
+                "feedback_text": "Positive feedback for the interview.",
+                "rating": 5
+            },
+            {
+                "id": {report_id},
+                "interview": {interview_id},
+                "interviewer": {interviewer_id},
+                "feedback_text": "Improvement needed in communication skills.",
+                "rating": 3
+            }
+        ]
+        ```
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackInterview'
+          description: ''
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
       parameters:
-      - in: path
+      - in: query
         name: format
         schema:
           type: string
           enum:
-          - .json
-        required: true
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/update-interview-status/{id}/:
+    patch:
+      operationId: api_update_interview_status_partial_update
+      description: |-
+        Update the status of an interview.
+
+        This view allows updating the status of a specific interview identified by its primary key (pk).
+
+        Parameters:
+        - request: The HTTP request object.
+        - pk: The primary key of the interview to be updated.
+
+        Returns:
+        - Response: A JSON response containing the serialized updated interview.
+
+        HTTP Methods:
+        - PATCH: Update the status of the interview.
+
+        Status Choices:
+        - 'Scheduled': The interview is scheduled.
+        - 'InProgress': The interview is in progress.
+        - 'Completed': The interview is completed.
+        - 'Canceled': The interview is canceled.
+
+        Example Request:
+        ```
+        PUT /api/interviews/{pk}/update_status/
+        {
+            "status": "Completed"
+        }
+        ```
+
+        Example Response:
+        ```
+        {
+            "id": {interview_id},
+            "candidate": {candidate_id},
+            "interviewer": {interviewer_id},
+            "date": "2023-10-12",
+            "time": "14:30:00",
+            "status": "Completed"
+        }
+        ```
+      parameters:
       - in: path
         name: id
         schema:
@@ -315,98 +445,93 @@ paths:
       - {}
       responses:
         '200':
-          description: No response body
-    put:
-      operationId: api_candidates_formatted_update
-      description: |-
-        Retrieve, update, or delete a candidate by ID.
-
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
-
-        Example URL for a specific candidate:
-        /candidates/1/
-
-        Example PUT data for updating a candidate:
-        {
-            "first_name": "Updated John",
-            "last_name": "Updated Doe",
-            "email": "updated@example.com",
-            "phone_number": "987-654-3210"
-        }
-
-        Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
-        - 400 Bad Request: Invalid input data.
-        - 404 Not Found: Candidate not found.
-      parameters:
-      - in: path
-        name: format
-        schema:
-          type: string
-          enum:
-          - .json
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: api_candidates_formatted_destroy
-      description: |-
-        Retrieve, update, or delete a candidate by ID.
-
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
-
-        Example URL for a specific candidate:
-        /candidates/1/
-
-        Example PUT data for updating a candidate:
-        {
-            "first_name": "Updated John",
-            "last_name": "Updated Doe",
-            "email": "updated@example.com",
-            "phone_number": "987-654-3210"
-        }
-
-        Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
-        - 400 Bad Request: Invalid input data.
-        - 404 Not Found: Candidate not found.
-      parameters:
-      - in: path
-        name: format
-        schema:
-          type: string
-          enum:
-          - .json
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '204':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+          description: ''
 components:
+  schemas:
+    Candidates:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 30
+        last_name:
+          type: string
+          maxLength: 30
+        email:
+          type: string
+          format: email
+          maxLength: 50
+        phone_number:
+          type: string
+          maxLength: 20
+      required:
+      - email
+      - first_name
+      - id
+      - last_name
+      - phone_number
+    FeedbackInterview:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        feedback_text:
+          type: string
+        rating:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
+        interview:
+          type: integer
+      required:
+      - feedback_text
+      - id
+      - interview
+      - rating
+    Interview:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        date:
+          type: string
+          format: date
+        time:
+          type: string
+          format: time
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        candidate:
+          type: integer
+        interviewer:
+          type: integer
+      required:
+      - candidate
+      - date
+      - id
+      - interviewer
+      - time
+    StatusEnum:
+      enum:
+      - Scheduled
+      - InProgress
+      - Completed
+      - Canceled
+      type: string
+      description: |-
+        * `Scheduled` - Scheduled
+        * `InProgress` - In Progress
+        * `Completed` - Completed
+        * `Canceled` - Canceled
   securitySchemes:
     basicAuth:
       type: http
@@ -415,8 +540,3 @@ components:
       type: apiKey
       in: cookie
       name: sessionid
-    tokenAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Token-based authentication with required prefix "Token"

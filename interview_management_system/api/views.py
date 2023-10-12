@@ -1,32 +1,25 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from interview_management_system.api.serializers import CandidatesSerializer
-from interview_management_system.interview_management.models import Candidate
+from interview_management_system.api.serializers import CandidatesSerializer, InterviewSerializer, \
+    FeedbackInterviewSerializer
+from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview
 
 
-@api_view(['GET', 'POST'])
+@extend_schema(responses=CandidatesSerializer)
+@api_view(['GET'])
 def candidates_list(request, format=None):
     """
-    List and create candidates.
+    List candidates.
 
-    List all candidates or create a new candidate.
+    List all candidates.
 
     Note:
     - For listing all candidates, send a GET request.
-    - For creating a new candidate, send a POST request with candidate details.
-
-    Example POST data for creating a candidate:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "email": "john@example.com",
-        "phone_number": "123-456-7890"
-    }
 
     Responses:
-    - 201 Created: Candidate created successfully.
     - 400 Bad Request: Invalid input data.
 
     """
@@ -35,13 +28,8 @@ def candidates_list(request, format=None):
         serializer = CandidatesSerializer(candidates, many=True)
         return Response(serializer.data)
 
-    if request.method == 'POST':
-        serializer = CandidatesSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
+@extend_schema(responses=CandidatesSerializer)
 @api_view(['GET', 'PUT', 'DELETE'])
 def candidate_details(request, pk, format=None):
     """
@@ -86,3 +74,163 @@ def candidate_details(request, pk, format=None):
     elif request.method == 'DELETE':
         candidate.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@extend_schema(responses=InterviewSerializer)
+@api_view(['GET'])
+def list_all_interviews(request, format=None):
+    """
+        List all interviews.
+
+        This view returns a list of all interviews in the system.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - Response: A JSON response containing the serialized list of interviews.
+
+        HTTP Methods:
+        - GET: Retrieve a list of all interviews.
+    """
+    if request.method == 'GET':
+        candidates = Interview.objects.all()
+        serializer = InterviewSerializer(candidates, many=True)
+        return Response(serializer.data)
+
+
+@extend_schema(responses=InterviewSerializer)
+@api_view(['POST'])
+def create_interview(request, format=None):
+    """
+        Create a new interview.
+
+        This endpoint allows you to create a new interview by providing the necessary data in the request body.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            Response: An HTTP response indicating the status of the request.
+
+        Example:
+            POST /api/create-interview/
+            {
+                "date": "2023-10-17",  
+                "time": "10:00:00",   
+                "status": "Scheduled",
+                "candidate": 2,
+                "interviewer": 2
+            }
+    """
+    if request.method == 'POST':
+        serializer = InterviewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@extend_schema(responses=InterviewSerializer)
+@api_view(['PATCH'])
+def update_interview_status(request, pk, format=None):
+    """
+        Update the status of an interview.
+
+        This view allows updating the status of a specific interview identified by its primary key (pk).
+
+        Parameters:
+        - request: The HTTP request object.
+        - pk: The primary key of the interview to be updated.
+
+        Returns:
+        - Response: A JSON response containing the serialized updated interview.
+
+        HTTP Methods:
+        - PATCH: Update the status of the interview.
+
+        Status Choices:
+        - 'Scheduled': The interview is scheduled.
+        - 'InProgress': The interview is in progress.
+        - 'Completed': The interview is completed.
+        - 'Canceled': The interview is canceled.
+
+        Example Request:
+        ```
+        PUT /api/interviews/{pk}/update_status/
+        {
+            "status": "Completed"
+        }
+        ```
+
+        Example Response:
+        ```
+        {
+            "id": {interview_id},
+            "candidate": {candidate_id},
+            "interviewer": {interviewer_id},
+            "date": "2023-10-12",
+            "time": "14:30:00",
+            "status": "Completed"
+        }
+        ```
+        """
+    try:
+        interview = Interview.objects.get(pk=pk)
+    except Interview.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = InterviewSerializer(interview, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(responses=FeedbackInterviewSerializer)
+@api_view(['GET'])
+def generating_reports(request, format=None):
+    """
+        Generate and retrieve feedback reports for interviews.
+
+        This view allows generating and retrieving feedback reports for interviews. It returns a list of feedback reports
+        associated with interviews.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - Response: A JSON response containing a list of serialized feedback reports.
+
+        HTTP Methods:
+        - GET: Retrieve the list of feedback reports for interviews.
+
+        Example Request:
+        ```
+        GET /api/generating_reports/
+        ```
+
+        Example Response:
+        ```
+        [
+            {
+                "id": {report_id},
+                "interview": {interview_id},
+                "interviewer": {interviewer_id},
+                "feedback_text": "Positive feedback for the interview.",
+                "rating": 5
+            },
+            {
+                "id": {report_id},
+                "interview": {interview_id},
+                "interviewer": {interviewer_id},
+                "feedback_text": "Improvement needed in communication skills.",
+                "rating": 3
+            }
+        ]
+        ```
+    """
+    if request.method == 'GET':
+        feedbacks = FeedbackInterview.objects.all()
+        serializer = FeedbackInterviewSerializer(feedbacks, many=True)
+        return Response(serializer.data)

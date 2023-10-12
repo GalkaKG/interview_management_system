@@ -1,27 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-
 from .forms import AddCandidateForm, InterviewForm
 from .models import Interview, Candidate
-from .serializers import InterviewSerializer
 from .tasks import send_interview_notification
-
-
-class InterviewViewSet(viewsets.ModelViewSet):
-    queryset = Interview.objects.all()
-    serializer_class = InterviewSerializer
-
-
-class MyApiView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        pass
 
 
 def add_candidate(request):

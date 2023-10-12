@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import forms
 
-from interview_management_system.interview_management.models import Candidate, Interview
+from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview
 
 
 class AddCandidateForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class AddCandidateForm(forms.ModelForm):
 class InterviewForm(forms.ModelForm):
     class Meta:
         model = Interview
-        fields = ['candidate', 'interviewer', 'date', 'time', 'status']
+        fields = ['job', 'candidate', 'interviewer', 'date', 'time', 'status']
 
     date = forms.DateField(
         initial=datetime.now().strftime("%Y-%m-%d"),
@@ -26,3 +26,12 @@ class InterviewForm(forms.ModelForm):
         widget=forms.TimeInput(attrs={'type': 'time'})
     )
 
+
+class FeedbackInterviewForm(forms.ModelForm):
+    class Meta:
+        model = FeedbackInterview
+        fields = '__all__'
+
+        widgets = {
+            'feedback_text': forms.Textarea(attrs={'rows': 4}),
+        }

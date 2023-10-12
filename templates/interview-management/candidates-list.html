@@ -7,8 +7,7 @@
     {% for candidate in candidates %}
         <div class="user-feedback">
           <li>{{ candidate.first_name }} {{ candidate.last_name }}</li>
-          <a href="{% url 'feedback' %}">Feedback</a>
-{#          <a href="#">Status Interview: </a>#}
+          <a href="{% url 'add feedback' %}">Add Feedback</a>
         </div>
     {% endfor %}
   </ul>

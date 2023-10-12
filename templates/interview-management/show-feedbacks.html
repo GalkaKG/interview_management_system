@@ -1,0 +1,20 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="feedback-list">
+  <h1 class="feedback-title">Feedbacks</h1>
+  {% for feedback in feedbacks %}
+    <ul class="feedback-items">
+        <li class="feedback-item">
+          <div class="result">{{ feedback.interview }}</div>
+          <div class="result">{{ feedback.candidate }}</div>
+          <div class="feedback-text">{{ feedback.feedback_text }}</div>
+          <div class="rating">Rating: {{ feedback.rating }}</div>
+        </li>
+    </ul>
+  {% empty %}
+    <p class="no-feedback">No feedback available.</p>
+  {% endfor %}
+
+</div>
+{% endblock %}

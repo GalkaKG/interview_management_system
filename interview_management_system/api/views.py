@@ -116,6 +116,7 @@ def create_interview(request, format=None):
         Example:
             POST /api/create-interview/
             {
+                "job": "developer",  # Choose from ['developer', 'designer', 'manager', 'analyst', 'engineer']
                 "date": "2023-10-17",  
                 "time": "10:00:00",   
                 "status": "Scheduled",

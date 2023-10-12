@@ -24,6 +24,14 @@ class Interview(models.Model):
         ('Completed', 'Completed'),
         ('Canceled', 'Canceled'),
     )
+    JOBS_CHOICES = (
+        ('developer', 'Software Developer'),
+        ('designer', 'Graphic Designer'),
+        ('manager', 'Project Manager'),
+        ('analyst', 'Business Analyst'),
+        ('engineer', 'Mechanical Engineer'),
+    )
+    job = models.CharField(max_length=50, choices=JOBS_CHOICES)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
     date = models.DateField()
@@ -42,20 +50,21 @@ class FeedbackInterview(models.Model):
         ('None', 'None'),
     )
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     feedback_text = models.TextField()
     rating = models.DecimalField(max_digits=3, decimal_places=2)
 
 
-class Job(models.Model):
-    title = models.CharField(max_length=100)
-    location = models.CharField(max_length=100, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    requirements = models.TextField(null=True, blank=True)
-    published_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.title
+# class Job(models.Model):
+#     title = models.CharField(max_length=100)
+#     location = models.CharField(max_length=100, null=True, blank=True)
+#     description = models.TextField(null=True, blank=True)
+#     requirements = models.TextField(null=True, blank=True)
+#     published_at = models.DateTimeField(auto_now_add=True)
+#     is_active = models.BooleanField(default=True)
+#
+#     def __str__(self):
+#         return self.title
 
 # class Notification(models.Model):
 #     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

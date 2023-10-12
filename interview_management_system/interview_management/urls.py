@@ -10,7 +10,8 @@ urlpatterns = [
     path('candidate-list/', views.candidate_list, name='candidate list'),
     path('add-interview/', views.add_interview, name='add interview'),
     path('interviews/', views.show_interviews, name='show interviews'),
-    path('feedback/', views.interview_feedback, name="feedback"),
+    path('add-feedback/', views.create_feedback, name="add feedback"),
+    path('show-feedback/', views.show_feedbacks, name="show feedbacks"),
 ]
 
 

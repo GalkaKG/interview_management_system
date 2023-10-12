@@ -169,6 +169,7 @@ paths:
         Example:
             POST /api/create-interview/
             {
+                "job": "developer",  # Choose from ['developer', 'designer', 'manager', 'analyst', 'engineer']
                 "date": "2023-10-17",
                 "time": "10:00:00",
                 "status": "Scheduled",
@@ -491,7 +492,10 @@ components:
           pattern: ^-?\d{0,1}(?:\.\d{0,2})?$
         interview:
           type: integer
+        candidate:
+          type: integer
       required:
+      - candidate
       - feedback_text
       - id
       - interview
@@ -502,6 +506,8 @@ components:
         id:
           type: integer
           readOnly: true
+        job:
+          $ref: '#/components/schemas/JobEnum'
         date:
           type: string
           format: date
@@ -519,7 +525,22 @@ components:
       - date
       - id
       - interviewer
+      - job
       - time
+    JobEnum:
+      enum:
+      - developer
+      - designer
+      - manager
+      - analyst
+      - engineer
+      type: string
+      description: |-
+        * `developer` - Software Developer
+        * `designer` - Graphic Designer
+        * `manager` - Project Manager
+        * `analyst` - Business Analyst
+        * `engineer` - Mechanical Engineer
     StatusEnum:
       enum:
       - Scheduled

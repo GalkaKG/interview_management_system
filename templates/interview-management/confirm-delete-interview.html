@@ -1,0 +1,15 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+    <div class="center-content">
+        <h2 class="confirm-deletion-title">Confirm Deletion</h2>
+        <p class="confirm-deletion-message">Are you sure you want to delet the interview scheduled for  <br>
+            {{ interview.date }}, {{ interview.time }} between {{ interview.interviewer }} and {{ interview.candidate }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Delete</button>
+            <a href="{% url 'show interviews' %}" class="cancel-link">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
+

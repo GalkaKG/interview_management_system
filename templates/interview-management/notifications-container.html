@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* Style the notification container */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: none;
+}
+
+/* Style the close button */
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<!-- The notification container -->
+<div id="notification-container" class="notification-container">
+  <span id="notification-message">This is a sample notification.</span>
+  <span class="close-button" onclick="closeNotification()">&times;</span>
+</div>
+
+<!-- Button to trigger a test notification -->
+<button onclick="showNotification()">Show Notification</button>
+
+<script>
+// Function to show the notification
+function showNotification() {
+  var notificationContainer = document.getElementById("notification-container");
+  notificationContainer.style.display = "block";
+}
+
+// Function to close the notification
+function closeNotification() {
+  var notificationContainer = document.getElementById("notification-container");
+  notificationContainer.style.display = "none";
+}
+</script>
+
+</body>
+</html>

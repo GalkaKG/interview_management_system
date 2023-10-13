@@ -1,6 +1,8 @@
 from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +35,8 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'drf_spectacular',
+    'django_celery_beat',
+    'channels',
     # 'oauth2_provider',
 ]
 
@@ -66,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'interview_management_system.wsgi.application'
+ASGI_APPLICATION = 'interview_management_system.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -148,21 +153,16 @@ SPECTACULAR_SETTINGS = {
 #     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
 # }
 
-LOGIN_URL = '/login/'
+LOGIN_URL = 'login/'
 
-# Set Apache Kafka
-# KAFKA_SERVER = 'localhost:9092'
-# KAFKA_TOPIC = 'my_topic'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-# Configure Celery
-CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
-CELERY_RESULT_BACKEND = 'rpc://'
+# CELERY_BROKER_URL = 'amqp://guest:password@localhost:5672//'  # Replace with your broker URL
 
-# Configure Celery Beat for scheduling
 CELERY_BEAT_SCHEDULE = {
-    'update_interview_statuses': {
-        'task': 'your_app.tasks.update_interview_statuses',
-        'schedule': timedelta(minutes=30),  # Run every 30 minutes
+    'update-interview-status': {
+        'task': 'interview_management_system.interview_management.tasks.update_interview_statuses',
+        'schedule': crontab(minute='*/1'),  # Adjust the schedule as needed
     },
 }

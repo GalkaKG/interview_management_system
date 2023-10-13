@@ -1,64 +1,53 @@
-from celery import Celery
-from datetime import datetime, timedelta
+from __future__ import absolute_import, unicode_literals
 
-from interview_management_system.interview_management.models import Interview
-
-app = Celery('interview_management')
-app.config_from_object('django.conf:settings')
-
-
-@app.task
-def update_interview_statuses():
-    now = datetime.now()
-    scheduled_interviews = Interview.objects.filter(
-        status='Scheduled',
-        date__lte=now.date(),
-        time__lte=(now - timedelta(minutes=30)).time()
-    )
-
-    for interview in scheduled_interviews:
-        interview.status = 'Completed'
-        interview.save()
-
-        # Send a message to the interviewer to prompt for feedback using RabbitMQ.
-        # You'll need to implement your own logic to send messages.
-
-
-
-
-
+from datetime import datetime
 
 from celery import shared_task
 
 from interview_management_system.interview_management.models import Interview
-from datetime import datetime, timedelta
+
+from django.utils import timezone
+
+from celery.utils.log import get_task_logger
+logger = get_task_logger(__name__)
+
+
+@shared_task(bind=True)
+def add(x, y):
+    return x + y
 
 
 @shared_task
-def send_interview_notification(interview_id):
-    try:
-        # Retrieve the interview object
-        interview = Interview.objects.get(pk=interview_id)
+def update_interview_statuses():
+    logger.info("Celery task update_interview_statuses is running")
+    current_datetime = timezone.now()
+    current_date = current_datetime.date()  # Get the date (YYYY-MM-DD)
+    current_time = current_datetime.time()  # Get the time (HH:MM:SS)
 
-        # Calculate the time until the interview
-        current_time = datetime.now()
-        interview_time = datetime.combine(interview.date, interview.time)
-        time_until_interview = interview_time - current_time
+    # Find interviews scheduled for the future
+    scheduled_interviews = Interview.objects.filter(status='Scheduled', date__gt=current_date)
 
-        # Set a threshold (e.g., 30 minutes) for sending notifications
-        notification_threshold = timedelta(minutes=30)
+    for interview in scheduled_interviews:
+        # Combine the date and time fields to create a datetime object for the interview
+        interview_datetime = datetime.combine(interview.date, interview.time)
 
-        if time_until_interview <= notification_threshold:
-            # Notify the user (replace this with your notification logic)
-            notify_user(interview.candidate.email,
-                        f'Your interview is starting soon for {interview.date} at {interview.time}.')
+        # Calculate the time remaining until the interview's scheduled time
+        time_until_interview = interview_datetime - current_datetime
 
-    except Interview.DoesNotExist:
-        # Handle the case where the interview doesn't exist
-        pass
+        if time_until_interview.total_seconds() <= 0:
+            # The scheduled time has come, change status to 'InProgress'
+            interview.status = 'InProgress'
+            interview.save()
+        elif time_until_interview.total_seconds() <= 600:  # 10 minutes
+            # 10 minutes have passed, change status to 'Completed'
+            interview.status = 'Completed'
+            interview.save()
 
+    logger.info("Celery task update_interview_statuses finished")
 
-def notify_user(email, message):
-    # Replace this with your notification logic (e.g., send an email, push notification, or in-app notification)
-    # Here, we're using a simple print statement as a placeholder
-    print(f'Sending notification to {email}: {message}')
+# @shared_task
+# def update_interview_statuses():
+#     now = datetime.now()
+#     # Update the status of interviews that are scheduled to start
+#     interviews_to_update = Interview.objects.filter(date__lte=now.date(), time__lte=now.time(), status='Scheduled')
+#     interviews_to_update.update(status='InProgress')

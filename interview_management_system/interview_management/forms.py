@@ -14,7 +14,7 @@ class AddCandidateForm(forms.ModelForm):
 class InterviewForm(forms.ModelForm):
     class Meta:
         model = Interview
-        fields = ['job', 'candidate', 'interviewer', 'date', 'time', 'status']
+        fields = ['job', 'candidate', 'interviewer', 'date', 'time']
 
     date = forms.DateField(
         initial=datetime.now().strftime("%Y-%m-%d"),
@@ -35,3 +35,9 @@ class FeedbackInterviewForm(forms.ModelForm):
         widgets = {
             'feedback_text': forms.Textarea(attrs={'rows': 4}),
         }
+
+
+class EditInterviewStatusForm(forms.ModelForm):
+    class Meta:
+        model = Interview
+        fields = ['status']

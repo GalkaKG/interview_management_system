@@ -1,8 +1,10 @@
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView
 
-from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm
+from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm
 from .models import Interview, Candidate, FeedbackInterview
-from .tasks import send_interview_notification
 
 
 def add_candidate(request):
@@ -74,43 +76,87 @@ def show_feedbacks(request):
     return render(request, 'interview-management/show-feedbacks.html', context)
 
 
-# def notify_interview(request, interview_id):
-#     interview = get_object_or_404(Interview, pk=interview_id)
+def update_interview_status(request, pk):
+    interview = Interview.objects.get(id=pk)
+    print(pk)
+    if request.method == 'POST':
+        print('it works')
+        form = EditInterviewStatusForm(request.POST, instance=interview)
+        print(form)
+        if form.is_valid():
+            form.save()
+            return redirect('show interviews')
+    else:
+        form = EditInterviewStatusForm(instance=interview)
+
+    return redirect('show interviews')
+
+
+def delete_interview(request, pk):
+    interview = get_object_or_404(Interview, pk=pk)
+
+    if request.method == 'POST':
+        interview.delete()
+        return redirect('home')
+
+    return render(request, 'interview-management/confirm-delete-interview.html', {'interview': interview})
+
+
+
+# def delete_interview(request, pk):
+#     interview = get_object_or_404(Interview, pk=pk)
+#     #
+#     # if request.method == 'POST':
+#         # Check if the request method is POST (typically from a form submission)
+#     interview.delete()  # Delete the interview object
+#     return redirect('show interviews')  # Redirect to an appropriate page after deletion
 #
-#     # Trigger the task asynchronously
-#     send_interview_notification.apply_async(args=(interview_id,), countdown=60)  # Send the notification in 60 seconds
+#     # If the request method is not POST, render a confirmation page
+#     # return redirect('show interviews')
+
+
+# def interviews_management(request):
+#     if request.method == 'POST':
+#         for interview in Interview.objects.all():
+#             interview_id = interview.id
+#             new_status = request.POST.get(f'status_{interview_id}')
+#             interview.status = new_status
+#             interview.save()
 #
-#     if interview.status == 'Scheduled':
-#         send_interview_notification.apply_async(args=(interview_id,), countdown=60)
-#     # If the interview is scheduled, you can perform some actions, for example:
-#     # Send a reminder notification
-#     # Return an HTTP response or redirect as needed
+#         return redirect('manage interviews')
 #
-#     return redirect('home')
+#     interviews = Interview.objects.all()
+#
+#     return render(request, 'interview-management/interviews-management.html', {'interviews': interviews})
 
 
 
 
-# from confluent_kafka import Producer
-#
-# # Kafka configuration
-# kafka_server = 'localhost:9092'
-# kafka_topic = 'my_topic'
-#
-# # Create a Kafka producer
-# producer = Producer({'bootstrap.servers': kafka_server})
-#
-# # Function to send a message to Kafka
-# def send_kafka_message(message):
-#     producer.produce(kafka_topic, key=None, value=message)
-#     producer.flush()
-#
-# # Example usage in a Django view
-# def interview_scheduled(request):
-#     # ... logic to schedule an interview ...
-#
-#     # Send a Kafka message
-#     message = {'event': 'interview_scheduled', 'interview_id': interview.id}
-#     send_kafka_message(message)
-#
-#     # ... other view logic ...
+
+# In your views, when an interview is completed and feedback is needed
+from channels.layers import get_channel_layer
+
+
+async def send_feedback_needed_notification(interviewer):
+    channel_layer = get_channel_layer()
+    await channel_layer.group_add(
+        "interviewer-{}".format(interviewer.id),
+        "feedback_reminder_group"
+    )
+    await channel_layer.group_send(
+        "feedback_reminder_group",
+        {"type": "notify.feedback.needed"}
+    )
+
+
+from channels.layers import get_channel_layer
+
+
+async def interview_completed(request):
+    # ... your logic to determine that feedback is needed ...
+    interviewer_id = request.user.id
+    # Notify the WebSocket consumer
+    channel_layer = get_channel_layer()
+    group_name = f"interviewer-{interviewer_id}"  # Replace with the actual interviewer's ID
+    await channel_layer.group_add(group_name, "feedback_reminder_group")
+    await channel_layer.group_send(group_name, {"type": "notify.feedback.needed"})

@@ -1,0 +1,25 @@
+# Command for create the schema.yml file for API documentation
+# python manage.py spectacular --file schema.yml
+
+# Download RabbitMQ docker image
+# docker run -itd --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management
+
+# Run Celery on Windows
+# celery -A interview_management_system worker -l info --pool=solo
+
+# Run Celery on Linux
+# celery -A interview_management_system worker -l info
+
+# Run First Task
+# python manage.py shell
+# from interview_management_system.interview_management.tasks import add
+# add.delay(4,4)
+
+# Install flower
+#  pip install flower
+
+# You should put this configuration in venv\liv\site-packages\tornado\platform\asyncio.py
+# import sys
+#
+# if sys.platform == 'win64':
+#     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy)

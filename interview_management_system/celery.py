@@ -1,16 +1,31 @@
-# celery.py
 from __future__ import absolute_import, unicode_literals
 import os
-from celery import Celery
+from datetime import timedelta
 
-# Set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'interview_management.settings')
+from celery import Celery
+from celery.schedules import crontab
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'interview_management_system.settings')
 
 app = Celery('interview_management_system')
 
-# Using a string here means the worker doesn't have to serialize
-# the configuration object to child processes.
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-# Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
+
+
+@app.task(bind=True)
+def debug_task(self):
+    print(f"Request: {self.request!r}")
+
+
+app.conf.beat_schedule = {
+    'add': {
+        'task': 'interview_management_system.management_system.tasks.add',
+        'schedule': crontab(minute='0', hour='0'),
+    },
+    # 'enable-scheduler': {
+    #     'task': 'celery.beat.Beat',
+    #     'schedule': timedelta(seconds=10),
+    # },
+}

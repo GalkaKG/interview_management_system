@@ -1,15 +1,24 @@
 from __future__ import absolute_import, unicode_literals
-
 from datetime import datetime
-
 from celery import shared_task
-
 from interview_management_system.interview_management.models import Interview
-
 from django.utils import timezone
-
 from celery.utils.log import get_task_logger
+
 logger = get_task_logger(__name__)
+
+
+@shared_task
+def delete_completed_interviews():
+    # Get interviews with the "Completed" status
+    completed_interviews = Interview.objects.filter(status='Completed')
+    print(completed_interviews)
+
+    # Delete each completed interview
+    for interview in completed_interviews:
+        interview.delete()
+
+    return f"Deleted {len(completed_interviews)} completed interviews."
 
 
 @shared_task(bind=True)

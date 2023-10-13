@@ -45,6 +45,7 @@ def add_interview(request):
 
 
 def show_interviews(request):
+
     interviews = Interview.objects.all()
     context = {
         "interviews": interviews
@@ -78,9 +79,7 @@ def show_feedbacks(request):
 
 def update_interview_status(request, pk):
     interview = Interview.objects.get(id=pk)
-    print(pk)
     if request.method == 'POST':
-        print('it works')
         form = EditInterviewStatusForm(request.POST, instance=interview)
         print(form)
         if form.is_valid():

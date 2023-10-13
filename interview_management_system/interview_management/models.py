@@ -1,6 +1,6 @@
 from django.db import models
-
 from interview_management_system.auth_app.models import Interviewer, CustomUser
+from . import custom_validators
 
 
 class Candidate(models.Model):
@@ -34,8 +34,8 @@ class Interview(models.Model):
     job = models.CharField(max_length=50, choices=JOBS_CHOICES)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
-    date = models.DateField()
-    time = models.TimeField()
+    date = models.DateField(validators=(custom_validators.future_date_validator,))
+    time = models.TimeField(validators=(custom_validators.future_time_validator,))
     status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)
 
     def __str__(self):

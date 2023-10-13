@@ -165,4 +165,8 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'interview_management_system.interview_management.tasks.update_interview_statuses',
         'schedule': crontab(minute='*/1'),  # Adjust the schedule as needed
     },
+    'delete-completed-interviews': {
+        'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
+        'schedule': crontab(minute='*'),   # Every 1 minute
+    },
 }

@@ -10,16 +10,12 @@
 # Run Celery on Linux
 # celery -A interview_management_system worker -l info
 
+# Run Celery beat
+# celery -A interview_management_system beat -l info
+
+
 # Run First Task
 # python manage.py shell
 # from interview_management_system.interview_management.tasks import add
 # add.delay(4,4)
 
-# Install flower
-#  pip install flower
-
-# You should put this configuration in venv\liv\site-packages\tornado\platform\asyncio.py
-# import sys
-#
-# if sys.platform == 'win64':
-#     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy)

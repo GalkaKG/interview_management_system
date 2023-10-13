@@ -10,53 +10,60 @@ logger = get_task_logger(__name__)
 
 @shared_task
 def delete_completed_interviews():
-    # Get interviews with the "Completed" status
     completed_interviews = Interview.objects.filter(status='Completed')
     print(completed_interviews)
 
-    # Delete each completed interview
     for interview in completed_interviews:
         interview.delete()
 
     return f"Deleted {len(completed_interviews)} completed interviews."
 
 
-@shared_task(bind=True)
-def add(x, y):
-    return x + y
-
 
 @shared_task
 def update_interview_statuses():
     logger.info("Celery task update_interview_statuses is running")
     current_datetime = timezone.now()
-    current_date = current_datetime.date()  # Get the date (YYYY-MM-DD)
-    current_time = current_datetime.time()  # Get the time (HH:MM:SS)
+    current_date = current_datetime.date()
+    current_time = current_datetime.time()
 
-    # Find interviews scheduled for the future
-    scheduled_interviews = Interview.objects.filter(status='Scheduled', date__gt=current_date)
+    hours, minutes, seconds = str(current_time).split(":")
+    current_hour = int(hours) - 3
+    current_minutes = int(minutes)
+
+    scheduled_interviews = Interview.objects.filter(status='Scheduled')
+    in_progress_interviews = Interview.objects.filter(status='InProgress')
 
     for interview in scheduled_interviews:
-        # Combine the date and time fields to create a datetime object for the interview
-        interview_datetime = datetime.combine(interview.date, interview.time)
+        hour_interview, minutes_interview, sec_interview = str(interview.time).split(":")
+        hour_interview = int(hour_interview)
+        minutes_interview = int(minutes_interview)
+        # interview_datetime = datetime.combine(interview.date, interview.time)
 
-        # Calculate the time remaining until the interview's scheduled time
-        time_until_interview = interview_datetime - current_datetime
+        interview.status = 'InProgress'
+        interview.save()
 
-        if time_until_interview.total_seconds() <= 0:
-            # The scheduled time has come, change status to 'InProgress'
-            interview.status = 'InProgress'
-            interview.save()
-        elif time_until_interview.total_seconds() <= 600:  # 10 minutes
-            # 10 minutes have passed, change status to 'Completed'
-            interview.status = 'Completed'
-            interview.save()
+        # if hour_interview <= current_hour and minutes_interview <= current_minutes and interview.date <= current_date:
+        #     interview.status = 'InProgress'
+        #     interview.save()
+
+        # time_until_interview = interview_datetime - current_datetime
+        #
+        # if time_until_interview.total_seconds() <= 0:
+        #     # The scheduled time has come, change status to 'InProgress'
+        #     interview.status = 'InProgress'
+        #     interview.save()
+
+    # for interview in in_progress_interviews:
+    #     interview_datetime = datetime.combine(interview.date, interview.time)
+    #     time_until_interview = interview_datetime - current_datetime
+    #     if time_until_interview.total_seconds() > 600:  # 10 minutes
+    #         # 10 minutes have passed, change status to 'Completed'
+    #         interview.status = 'Completed'
+    #         interview.save()
 
     logger.info("Celery task update_interview_statuses finished")
 
+
 # @shared_task
-# def update_interview_statuses():
-#     now = datetime.now()
-#     # Update the status of interviews that are scheduled to start
-#     interviews_to_update = Interview.objects.filter(date__lte=now.date(), time__lte=now.time(), status='Scheduled')
-#     interviews_to_update.update(status='InProgress')
+

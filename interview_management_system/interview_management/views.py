@@ -1,7 +1,9 @@
+import re
+
 from django.http import JsonResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
+from django.utils import timezone
 
 from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm
 from .models import Interview, Candidate, FeedbackInterview
@@ -45,8 +47,32 @@ def add_interview(request):
 
 
 def show_interviews(request):
-
     interviews = Interview.objects.all()
+
+
+
+    current_datetime = timezone.now()
+    current_date = current_datetime.date()  # Get the date (YYYY-MM-DD)
+    current_time = current_datetime.time()
+    for interview in interviews:
+        print('-----------------------------')
+        print(interview.time)
+        print(current_time)
+
+        # hours, minutes, seconds = str(current_time).split(":")
+        # hour_interview, mins_interview, sec_interview = str(interview.time).split(":")
+        # #
+        # curr_hours = int(hours)
+        # # curr_minutes = int(minutes)
+        #
+        # #
+        # print("Curr Hours:", curr_hours - 3)
+        # # # print("Curr Minutes:", minutes)
+        # #
+        # print("Interview hour", hour_interview)
+        # print("int min", mins_interview)
+
+
     context = {
         "interviews": interviews
     }
@@ -81,7 +107,6 @@ def update_interview_status(request, pk):
     interview = Interview.objects.get(id=pk)
     if request.method == 'POST':
         form = EditInterviewStatusForm(request.POST, instance=interview)
-        print(form)
         if form.is_valid():
             form.save()
             return redirect('show interviews')

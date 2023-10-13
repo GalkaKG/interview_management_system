@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -158,14 +159,20 @@ LOGIN_URL = 'login/'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-# CELERY_BROKER_URL = 'amqp://guest:password@localhost:5672//'  # Replace with your broker URL
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:15672//'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 CELERY_BEAT_SCHEDULE = {
-    'update-interview-status': {
+    'update_interview_statuses': {
         'task': 'interview_management_system.interview_management.tasks.update_interview_statuses',
         'schedule': crontab(minute='*/1'),  # Adjust the schedule as needed
     },
-    'delete-completed-interviews': {
+    # 'delete-completed-interviews': {
+    #     'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
+    #     'schedule': crontab(minute='*'),   # Every 1 minute
+    # },
+    'delete_completed_interviews': {
         'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
         'schedule': crontab(minute='*'),   # Every 1 minute
     },

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Define a background color and font for the whole page */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Create a container for the error message */
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Style the error message */
+        .error-message {
+            font-size: 3rem;
+            color: #d9534f; /* A red color, you can change this */
+        }
+
+        /* Style the error description */
+        .error-description {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        /* Style a button or link for navigation */
+        .error-link {
+            text-decoration: none;
+            background-color: #337ab7; /* A blue color, you can change this */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .error-link:hover {
+            background-color: #286090; /* Darker shade of blue */
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-message">Oops! Something went wrong.</h1>
+        <p class="error-description">We apologize for the inconvenience. The page you are looking for might be temporarily unavailable.</p>
+        <a href="/" class="error-link">Go back to the homepage</a>
+    </div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Interview Management System
 
-![Project Logo](/path/to/your/logo.png) <!-- Replace with your project's logo or image -->
+![Project Logo](https://github.com/GalkaKG/interview_management_system/blob/main/images_for_github/interview_management_system_home_page.png) <!-- Replace with your project's logo or image -->
 
 A modern and efficient system for managing interviews and candidates in your organization.
 

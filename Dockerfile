@@ -13,4 +13,5 @@ COPY media /app/media
 COPY static /app/static
 COPY static_root /app/static_root
 COPY templates /app/templates
+COPY schema.yml /app/schema.yml
 COPY interview_management_system /app/interview_management_system

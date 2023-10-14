@@ -5,7 +5,9 @@
     <h2 class="profile-details-title">Profile Details</h2>
     <div class="profile-details">
         {% if profile %}
-        <p><strong>Name:</strong> {{ profile.first_name }} {{ profile.last_name }}</p>
+            {% if profile.first_name and profile.last_name %}
+                <p><strong>Name:</strong> {{ profile.first_name }} {{ profile.last_name }}</p>
+             {% endif %}
         <p><strong>Username:</strong> {{ request.user.username }}</p>
         <p><strong>User Type:</strong> {{ request.user.get_user_type_display }}</p>
         <p><strong>Email:</strong> {{ request.user.email }}</p>

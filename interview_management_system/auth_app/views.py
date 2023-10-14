@@ -29,6 +29,10 @@ class CustomLoginView(LoginView):
         return reverse_lazy('home')
 
 
+def option_logout(request):
+    return render(request, 'auth/logout-options.html')
+
+
 def logout_view(request):
     logout(request)
     return redirect('login')

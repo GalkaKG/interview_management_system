@@ -6,6 +6,41 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interview Management System</title>
+     <style>
+        /* Basic styling for the menu */
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .menu-item {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
 <head>
@@ -14,14 +49,28 @@
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'add interview' %}">Schedule Interview</a></li>
         <li><a href="{% url 'show interviews' %}">View Upcoming Interviews</a></li>
-{#        <li><a href="{% url 'manage interviews'%}">Manage Interviews</a></li>#}
         <li><a href="{% url 'add candidate' %}">Add New Candidate</a></li>
         <li><a href="{% url 'candidate list' %}">View Candidates</a></li>
         {% if user.is_authenticated %}
-            <li><a href="{% url 'profile details' %}">Profile</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+        <div class="menu">
+            <button class="menu-button">Menu</button>
+            <div class="menu-content">
+                <a class="menu-item" href="{% url 'profile details' %}">Profile</a>
+{#                <a class="menu-item" href="#">Settings</a>#}
+                <a class="menu-item" href="{% url 'options logout' %}">Logout</a>
+            </div>
+        </div>
+{#            <li><a href="{% url 'profile details' %}">Profile</a></li>#}
+{#            <li><a href="{% url 'logout' %}">Logout</a></li>#}
         {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
+{#            <li><a href="{% url 'login' %}">Login</a></li>#}
+        <div class="menu">
+        <button class="menu-button">Menu</button>
+        <div class="menu-content">
+{#            <a class="menu-item" href="#">Settings</a>#}
+            <li><a class="menu-item" href="{% url 'login' %}">Login</a></li>
+        </div>
+        </div>
         {% endif %}
     </ul>
 </nav>
@@ -29,4 +78,18 @@
     {% block content %}
     {% endblock %}
 </body>
+<script>
+        const menuButton = document.querySelector(".menu-button");
+        const menuContent = document.querySelector(".menu-content");
+
+        menuButton.addEventListener("click", () => {
+            menuContent.style.display = menuContent.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", (event) => {
+            if (event.target !== menuButton) {
+                menuContent.style.display = "none";
+            }
+        });
+    </script>
 </html>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from interview_management_system.auth_app.models import CustomUser, Interviewer, HR
+from interview_management_system.auth_app.models import CustomUser, Interviewer, HR, Administrator
 
 
 @admin.register(CustomUser)
@@ -16,3 +16,9 @@ class InterviewerAdmin(admin.ModelAdmin):
 @admin.register(HR)
 class HRAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Administrator)
+class AdministratorAdmin(admin.ModelAdmin):
+    pass
+

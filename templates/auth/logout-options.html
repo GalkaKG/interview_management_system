@@ -1,0 +1,86 @@
+{% extends 'base/index.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="logout-container">
+        <h1 class="logout-header">Logout</h1>
+        <p class="logout-text">Are you sure you want to log out?</p>
+        <form id="logout-form" method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <div class="button-container">
+                <a href="{% url 'logout' %}" class="btn confirm-button" id="confirm-logout"> Yes</a>
+                <a href="{% url 'home' %}" class="btn cancel-button" id="cancel-logout">No</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+    .logout-container {
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f5f5f5;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logout-header {
+        font-size: 28px;
+        margin: 10px 0;
+        color: #333;
+    }
+
+    .logout-text {
+        font-size: 20px;
+        margin: 20px 0;
+        color: #555;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .confirm-button, .cancel-button {
+        padding: 10px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .confirm-button {
+        background-color: red;
+        color: white;
+    }
+
+    .cancel-button {
+        background-color: #00a3e0;
+        color: white;
+    }
+
+    .confirm-button:hover {
+        background-color: #cc0000;
+    }
+
+    .cancel-button:hover {
+        background-color: #007BFF;
+    }
+</style>
+
+<script>
+    document.getElementById("confirm-logout").addEventListener("click", function() {
+        document.getElementById("logout-form").submit();
+    });
+
+    document.getElementById("cancel-logout").addEventListener("click", function() {
+        // Redirect or perform any other action on cancel
+    });
+</script>
+{% endblock %}

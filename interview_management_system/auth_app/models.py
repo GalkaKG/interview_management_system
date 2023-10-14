@@ -88,42 +88,4 @@ class Administrator(models.Model):
     def __str__(self):
         return self.user.username
 
-# from django.contrib.auth.models import Permission
-#
-# # Create custom permissions
-# can_view_candidate = Permission.objects.create(
-#     codename='can_view_candidate',
-#     name='Can view candidate details'
-# )
-# can_schedule_interview = Permission.objects.create(
-#     codename='can_schedule_interview',
-#     name='Can schedule interviews'
-# )
-#
-# # Assign permissions to roles
-# interviewer = Group.objects.get(name='interviewer')
-# hr = Group.objects.get(name='hr')
-# admin = Group.objects.get(name='admin')
-# interviewer.permissions.add(can_view_candidate)
-# hr.permissions.add(can_view_candidate, can_schedule_interview)
-# admin.permissions.add(can_view_candidate, can_schedule_interview)
-
-
-# from django.contrib.auth.models import Group
-#
-# def assign_user_role(user, role):
-#     group = Group.objects.get(name=role)
-#     user.groups.add(group)
-#
-# # Example: Assign a user the role of 'interviewer'
-# assign_user_role(user, 'interviewer')
-
-
-
-
-# from django.contrib.auth.decorators import permission_required
-#
-# @permission_required('auth.can_schedule_interview')
-# def schedule_interview(request):
-#     # Your view logic here
 

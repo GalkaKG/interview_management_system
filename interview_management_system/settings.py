@@ -145,7 +145,13 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
+
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    # ),
 }
+
+
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Interview Management system",
@@ -162,7 +168,6 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
-# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:15672//'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 CELERY_BEAT_SCHEDULE = {
@@ -170,10 +175,6 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'interview_management_system.interview_management.tasks.update_interview_statuses',
         'schedule': crontab(minute='*/1'),  # Adjust the schedule as needed
     },
-    # 'delete-completed-interviews': {
-    #     'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
-    #     'schedule': crontab(minute='*'),   # Every 1 minute
-    # },
     'delete_completed_interviews': {
         'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
         'schedule': crontab(minute='*'),   # Every 1 minute

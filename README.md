@@ -62,3 +62,18 @@ Before you begin, ensure you have met the following requirements:
   <li>RabbitMQ</li>
   <li>HTML, CSS, JavaScript</li>
 </ul>
+
+
+## Contributing
+
+I value your contributions to the Interview Management System. If you discover a bug, have new ideas, or want to improve the project, we welcome your input. To get started:
+
+- If you encounter a bug or have a feature request, please feel free to create an issue.
+- I appreciate your ideas for enhancements and any feedback you may have.
+
+Thank you for considering contributing to this project! Your input helps me make it better.
+
+
+## License
+
+- GNU General Public License v3.0

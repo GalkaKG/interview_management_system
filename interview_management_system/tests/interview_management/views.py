@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 
-# ***** Unit tests for the add_candidate view
+# ***** Tests for the add_candidate view
 
 class AddCandidateViewTest(TestCase):
     def test_add_candidate_post_valid_form(self):
@@ -19,7 +19,7 @@ class AddCandidateViewTest(TestCase):
 
     def test_add_candidate_get_request(self):
         response = self.client.get(reverse('add candidate'))
-        self.assertEqual(response.status_code, 200) 
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'interview-management/add-candidate.html')
 
     def test_add_candidate_post_invalid_form(self):
@@ -36,3 +36,6 @@ class AddCandidateViewTest(TestCase):
         self.assertTrue('form' in response.context)
         form = response.context['form']
         self.assertTrue(form.errors)
+
+
+

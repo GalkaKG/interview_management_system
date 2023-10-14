@@ -1,6 +1,5 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from interview_management_system.auth_app.models import Interviewer, HR, CustomUser
 
 

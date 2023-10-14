@@ -1,40 +1,64 @@
 # Interview Management System
 
-<!-- ![Project Logo/Icon](logo.png)  If applicable -->
+![Project Logo](/path/to/your/logo.png) <!-- Replace with your project's logo or image -->
 
-An Interview Management System built using Django and Django Rest Framework for streamlining and automating the interview process within your organization.
+A modern and efficient system for managing interviews and candidates in your organization.
 
 ## Table of Contents
 - [About](#about)
-- [Demo](#demo)
 - [Features](#features)
-- [Installation](#installation)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Usage](#usage)
-- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## About
 
-The Interview Management System is a powerful tool designed to simplify and automate interview-related tasks. It allows organizations to manage interviews, candidates, interviewers, and job positions seamlessly.
-
-## Demo
-
-<!-- Check out the [Demo](https://your-demo-link.com) to see the Interview Management System in action. 
-
-![Demo](demo.gif)  Example: If you have a GIF demonstrating your project -->
+The Interview Management System is a web application designed to streamline the interview process, making it easier to manage candidates, interviewers, and interview schedules. It offers a user-friendly interface to help HR personnel and interviewers efficiently conduct interviews.
 
 ## Features
 
-- Schedule and manage interviews.
-- Create and manage job positions.
-- Keep track of candidate details.
-- Assign interviewers to interviews.
+- User authentication and authorization system.
+- Interviewer management for assigning and managing interviewers.
+- Scheduling and tracking interviews with status updates.
+- RESTful API to provide external systems and user interfaces access to core system functionalities. The API includes proper documentation and versioning and offers endpoints for various actions
+- Cool API Documentation
 
-## Installation
+## Getting Started
 
-To get started with the Interview Management System, follow these steps:
+These instructions will help you get a copy of the project up and running on your local machine for development and testing purposes.
 
-1. Clone this repository:
+### Prerequisites
 
-   ```bash
-   git clone https://github.com/GalkaKG/interview_management_system.git
-   cd interview-management-system
+Before you begin, ensure you have met the following requirements:
+
+- Python 3.x
+- Django (latest version)
+- PostgreSQL (or your preferred database)
+- Git (optional, for cloning the repository)
+
+<h2> Installation </h2>
+<ol>
+  <li>Clone the repository: <br/>https://github.com/GalkaKG/interview_management_system.git </li>
+  <li>Set up a virtual environment (optional, but recommended) <br/>pip install virtualenv<br/>cd interview_management_system<br/>virtualenv venv
+  <br/>- On Windows:<br/>venv\Scripts\activate<br/>- On macOS and Linux:<br/>source venv/bin/activate
+  <li>Install project dependencies: <br /> pip install -r requirements.txt
+  </li>
+  <li>Set up environment variables</li>
+  <li> Apply database migrations: <br /> python manage.py makemigrations <br> python manage.py migrate
+  </li>
+  <li>Create a superuser (optional) <br /> python manage.py createsuperuser </li>
+  <li>Run the development server: <br />python manage.py runserver</li>
+</ol>
+
+
+<h2> Technologies Used </h2>
+<ul>
+  <li>Django</li>
+  <li>Django Rest Framework</li>
+  <li>PostgreSQL </li>
+  <li>RabbitMQ</li>
+  <li>HTML, CSS, JavaScript</li>
+</ul>

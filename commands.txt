@@ -14,8 +14,6 @@
 # celery -A interview_management_system beat -l info
 
 
-# Run First Task
-# python manage.py shell
-# from interview_management_system.interview_management.tasks import add
-# add.delay(4,4)
+# Run the script for creating the users groups
+# python manage.py manage_groups
 

@@ -47,12 +47,16 @@
 <nav>
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'candidate list' %}">View Candidates</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'create job' %}">Create Job</a></li>
+            <li><a href="{% url 'add interview' %}">Schedule Interview</a></li>
+        {% endif %}
         <li><a href="{% url 'interviews list' %}">View Upcoming Interviews</a></li>
         <li><a href="{% url 'show feedbacks' %}">Feedbacks</a></li>
+        <li><a href="{% url 'candidate list' %}">View Candidates</a></li>
       {% if user.is_authenticated %}
-        <li><a href="{% url 'create job' %}">Create Job</a></li>
-        <li><a href="{% url 'add interview' %}">Schedule Interview</a></li>
+
+
         <li><a href="{% url 'add candidate' %}">Add New Candidate</a></li>
 
         <div class="menu">

@@ -6,14 +6,15 @@ from . import custom_validators
 
 
 class Job(models.Model):
-    JOBS_TITLES = (
-        ('developer', 'Software Developer'),
-        ('designer', 'Graphic Designer'),
-        ('manager', 'Project Manager'),
-        ('analyst', 'Business Analyst'),
-        ('engineer', 'Mechanical Engineer'),
-    )
-    title = models.CharField(max_length=100, choices=JOBS_TITLES)
+    # JOBS_TITLES = (
+    #     ('developer', 'Software Developer'),
+    #     ('designer', 'Graphic Designer'),
+    #     ('manager', 'Project Manager'),
+    #     ('analyst', 'Business Analyst'),
+    #     ('engineer', 'Mechanical Engineer'),
+    # )
+    # title = models.CharField(max_length=100, choices=JOBS_TITLES)
+    title = models.CharField(max_length=50)
     location = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     requirements = models.TextField(null=True, blank=True)

@@ -1,8 +1,11 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from interview_management_system.api.custom_functions import get_candidate
 from interview_management_system.api.serializers import CandidatesSerializer, InterviewSerializer, \
     FeedbackInterviewSerializer
 from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview
@@ -30,15 +33,38 @@ def candidates_list(request, format=None):
 
 
 @extend_schema(responses=CandidatesSerializer)
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT'])
 def candidate_details(request, pk, format=None):
     """
-        Retrieve, update, or delete a candidate by ID.
-
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
+        Retrieve a candidate by specifying the candidate's ID.
 
         Example URL for a specific candidate:
         /candidates/1/
+
+        Responses:
+        - 200 OK: Candidate retrieved successfully.
+        - 400 Bad Request: Invalid input data.
+        - 404 Not Found: Candidate not found.
+
+        """
+
+    candidate = get_candidate(pk)
+
+    if request.method == 'GET':
+        serializer = CandidatesSerializer(candidate)
+        return Response(serializer.data)
+
+
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@extend_schema(responses=CandidatesSerializer)
+@api_view(['PUT'])
+def edit_candidate(request, pk, format=None):
+    """
+        Update a candidate by specifying the candidate's ID.
+
+        Example URL for a specific candidate:
+        /edit-candidate/1/
 
         Example PUT data for updating a candidate:
         {
@@ -49,29 +75,43 @@ def candidate_details(request, pk, format=None):
         }
 
         Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
+        - 200 OK: Updated successfully.
         - 400 Bad Request: Invalid input data.
         - 404 Not Found: Candidate not found.
 
         """
-    try:
-        candidate = Candidate.objects.get(pk=pk)
-    except Candidate.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = CandidatesSerializer(candidate)
-        return Response(serializer.data)
+    candidate = get_candidate(pk)
 
-    elif request.method == 'PUT':
+    if request.method == 'PUT':
         serializer = CandidatesSerializer(candidate, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@extend_schema(responses=CandidatesSerializer)
+@api_view(['DELETE'])
+def delete_candidate(request, pk, format=None):
+    """
+        Delete a candidate by specifying the candidate's ID.
+
+        Example URL for a specific candidate:
+        /delete-candidate/1/
+
+        Responses:
+        - 204 No Content: Candidate deleted successfully.
+        - 400 Bad Request: Invalid input data.
+        - 404 Not Found: Candidate not found.
+
+    """
+
+    candidate = get_candidate(pk)
+
+    if request.method == 'DELETE':
         candidate.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -99,6 +139,8 @@ def list_all_interviews(request, format=None):
         return Response(serializer.data)
 
 
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 @extend_schema(responses=InterviewSerializer)
 @api_view(['POST'])
 def create_interview(request, format=None):
@@ -131,6 +173,8 @@ def create_interview(request, format=None):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 @extend_schema(responses=InterviewSerializer)
 @api_view(['PATCH'])
 def update_interview_status(request, pk, format=None):
@@ -180,7 +224,7 @@ def update_interview_status(request, pk, format=None):
     except Interview.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'PUT':
+    if request.method == 'PATCH':
         serializer = InterviewSerializer(interview, data=request.data)
         if serializer.is_valid():
             serializer.save()

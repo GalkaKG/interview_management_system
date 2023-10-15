@@ -1,8 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import DeleteView
-
 from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm, CreateJobForm
 from .models import Interview, Candidate, FeedbackInterview
 

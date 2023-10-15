@@ -6,17 +6,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
+from interview_management_system.auth_app.custom_functions import get_custom_user
 from interview_management_system.auth_app.forms import CustomUserCreationForm, EditInterviewerProfileForm, \
     EditHRProfileForm, EditAdministratorForm
-from interview_management_system.auth_app.models import Interviewer, HR, Administrator, CustomUser
-
-
-def get_custom_user(pk):
-    try:
-        user = CustomUser.objects.get(id=pk)
-        return user
-    except CustomUser.DoesNotExist:
-        return redirect('error_404')
+from interview_management_system.auth_app.models import Interviewer, HR, Administrator
 
 
 class RegisterView(CreateView):

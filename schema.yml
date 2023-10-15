@@ -19,8 +19,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -33,24 +32,13 @@ paths:
     get:
       operationId: api_candidates_retrieve_2
       description: |-
-        Retrieve, update, or delete a candidate by ID.
-
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
+        Retrieve a candidate by specifying the candidate's ID.
 
         Example URL for a specific candidate:
         /candidates/1/
 
-        Example PUT data for updating a candidate:
-        {
-            "first_name": "Updated John",
-            "last_name": "Updated Doe",
-            "email": "updated@example.com",
-            "phone_number": "987-654-3210"
-        }
-
         Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
+        - 200 OK: Candidate retrieved successfully.
         - 400 Bad Request: Invalid input data.
         - 404 Not Found: Candidate not found.
       parameters:
@@ -62,8 +50,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -75,24 +62,13 @@ paths:
     put:
       operationId: api_candidates_update
       description: |-
-        Retrieve, update, or delete a candidate by ID.
-
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
+        Retrieve a candidate by specifying the candidate's ID.
 
         Example URL for a specific candidate:
         /candidates/1/
 
-        Example PUT data for updating a candidate:
-        {
-            "first_name": "Updated John",
-            "last_name": "Updated Doe",
-            "email": "updated@example.com",
-            "phone_number": "987-654-3210"
-        }
-
         Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
+        - 200 OK: Candidate retrieved successfully.
         - 400 Bad Request: Invalid input data.
         - 404 Not Found: Candidate not found.
       parameters:
@@ -104,8 +80,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -114,44 +89,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Candidates'
           description: ''
-    delete:
-      operationId: api_candidates_destroy
-      description: |-
-        Retrieve, update, or delete a candidate by ID.
-
-        Retrieve, update, or delete a candidate by specifying the candidate's ID.
-
-        Example URL for a specific candidate:
-        /candidates/1/
-
-        Example PUT data for updating a candidate:
-        {
-            "first_name": "Updated John",
-            "last_name": "Updated Doe",
-            "email": "updated@example.com",
-            "phone_number": "987-654-3210"
-        }
-
-        Responses:
-        - 200 OK: Candidate retrieved or updated successfully.
-        - 204 No Content: Candidate deleted successfully.
-        - 400 Bad Request: Invalid input data.
-        - 404 Not Found: Candidate not found.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '204':
-          description: No response body
   /api/create-interview/:
     post:
       operationId: api_create_interview_create
@@ -179,8 +116,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -188,6 +124,72 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Interview'
+          description: ''
+  /api/delete-candidate/{id}/:
+    delete:
+      operationId: api_delete_candidate_destroy
+      description: |-
+        Delete a candidate by specifying the candidate's ID.
+
+        Example URL for a specific candidate:
+        /delete-candidate/1/
+
+        Responses:
+        - 204 No Content: Candidate deleted successfully.
+        - 400 Bad Request: Invalid input data.
+        - 404 Not Found: Candidate not found.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/edit-candidate/{id}/:
+    put:
+      operationId: api_edit_candidate_update
+      description: |-
+        Update a candidate by specifying the candidate's ID.
+
+        Example URL for a specific candidate:
+        /edit-candidate/1/
+
+        Example PUT data for updating a candidate:
+        {
+            "first_name": "Updated John",
+            "last_name": "Updated Doe",
+            "email": "updated@example.com",
+            "phone_number": "987-654-3210"
+        }
+
+        Responses:
+        - 200 OK: Updated successfully.
+        - 400 Bad Request: Invalid input data.
+        - 404 Not Found: Candidate not found.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidates'
           description: ''
   /api/generating_reports/:
     get:
@@ -234,8 +236,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -243,6 +244,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FeedbackInterview'
+          description: ''
+  /api/list-interviews/:
+    get:
+      operationId: api_list_interviews_retrieve
+      description: |-
+        List all interviews.
+
+        This view returns a list of all interviews in the system.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - Response: A JSON response containing the serialized list of interviews.
+
+        HTTP Methods:
+        - GET: Retrieve a list of all interviews.
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
           description: ''
   /api/schema/:
     get:
@@ -366,8 +395,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -441,8 +469,7 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - jwtAuth: []
       - {}
       responses:
         '200':
@@ -450,6 +477,87 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Interview'
+          description: ''
+  /gettoken/:
+    post:
+      operationId: gettoken_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - gettoken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /refreshtoken/:
+    post:
+      operationId: refreshtoken_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - refreshtoken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /veryfytoken/:
+    post:
+      operationId: veryfytoken_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - veryfytoken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
           description: ''
 components:
   schemas:
@@ -539,11 +647,48 @@ components:
         * `InProgress` - In Progress
         * `Completed` - Completed
         * `Canceled` - Canceled
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
   securitySchemes:
-    basicAuth:
+    jwtAuth:
       type: http
-      scheme: basic
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: sessionid
+      scheme: bearer
+      bearerFormat: JWT

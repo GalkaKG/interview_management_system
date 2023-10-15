@@ -63,3 +63,12 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         user = get_custom_user(self.request.user.id)
         return reverse('profile details', kwargs={'pk': user.id})
+
+
+# @login_required  # Apply login required if you want to ensure the user is logged in.
+# class CustomUserDeleteView(DeleteView):
+#     model = CustomUser
+#     success_url = reverse_lazy('home')  # Change 'user-list' to the URL name for your user list view
+#
+#     # Optionally, you can customize the template used for confirmation.
+#     template_name = 'auth/delete-user.html'

@@ -69,3 +69,6 @@ class Profile(models.Model):
             self.user.groups.add(group)
 
         super().save(*args, **kwargs)
+
+
+

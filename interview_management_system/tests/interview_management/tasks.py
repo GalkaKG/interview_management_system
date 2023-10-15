@@ -1,18 +1,18 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from interview_management_system.interview_management.models import Interview
+from interview_management_system.interview_management.models import Interview, Job
 from interview_management_system.interview_management.tasks import delete_completed_interviews
 
 
-# ***** Unit tests for the delete_completed_interviews task
-
 class DeleteCompletedInterviewsTestCase(TestCase):
     def test_delete_completed_interviews(self):
+        job = Job.objects.create(title='developer')
+
         interview = Interview.objects.create(
             candidate_id=2,
             interviewer_id=1,
-            job='developer',
+            job=job,  # Use the Job instance
             date=timezone.now().date(),
             time=timezone.now().time(),
             status='Completed',

@@ -18,14 +18,3 @@ class EditProfileForm(forms.ModelForm):
         model = Profile
         exclude = ('user',)
 
-
-# class EditHRProfileForm(forms.ModelForm):
-#     class Meta:
-#         model = HR
-#         exclude = ('user',)
-#
-#
-# class EditAdministratorForm(forms.ModelForm):
-#     class Meta:
-#         model = Administrator
-#         exclude = ('user', 'is_superuser', 'is_staff')

@@ -128,37 +128,6 @@ def custom_404(request, exception):
     return render(request, 'error-pages/error-page.html', status=404)
 
 
-# def delete_interview(request, pk):
-#     interview = get_object_or_404(Interview, pk=pk)
-#     #
-#     # if request.method == 'POST':
-#         # Check if the request method is POST (typically from a form submission)
-#     interview.delete()  # Delete the interview object
-#     return redirect('show interviews')  # Redirect to an appropriate page after deletion
-#
-#     # If the request method is not POST, render a confirmation page
-#     # return redirect('show interviews')
-
-
-# def interviews_management(request):
-#     if request.method == 'POST':
-#         for interview in Interview.objects.all():
-#             interview_id = interview.id
-#             new_status = request.POST.get(f'status_{interview_id}')
-#             interview.status = new_status
-#             interview.save()
-#
-#         return redirect('manage interviews')
-#
-#     interviews = Interview.objects.all()
-#
-#     return render(request, 'interview-management/interviews-management.html', {'interviews': interviews})
-
-
-# In your views, when an interview is completed and feedback is needed
-from channels.layers import get_channel_layer
-
-
 async def send_feedback_needed_notification(interviewer):
     channel_layer = get_channel_layer()
     await channel_layer.group_add(

@@ -2,8 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
-from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm
+from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm, CreateJobForm
 from .models import Interview, Candidate, FeedbackInterview
+
+
+def create_job(request):
+    if request.method == 'POST':
+        form = CreateJobForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('interviews list')
+    else:
+        form = CreateJobForm()
+
+    return render(request, 'interview-management/create-job.html', {'form': form})
 
 
 def add_candidate(request):
@@ -45,7 +57,7 @@ def add_interview(request):
         form = InterviewForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('show interviews')
+            return redirect('interviews list')
     else:
         form = InterviewForm()
 
@@ -66,7 +78,7 @@ def create_feedback(request):
         if form.is_valid():
             feedback = form.save(commit=False)
             feedback.save()
-            return redirect('show interviews')
+            return redirect('interviews list')
     else:
         form = FeedbackInterviewForm()
 
@@ -90,11 +102,11 @@ def update_interview_status(request, pk):
         form = EditInterviewStatusForm(request.POST, instance=interview)
         if form.is_valid():
             form.save()
-            return redirect('show interviews')
+            return redirect('interviews list')
     else:
         form = EditInterviewStatusForm(instance=interview)
 
-    return redirect('show interviews')
+    return redirect('interviews list')
 
 
 def delete_interview(request, pk):

@@ -1,6 +1,27 @@
 from django.db import models
+from django.utils import timezone
+
 from interview_management_system.auth_app.models import Interviewer, CustomUser
 from . import custom_validators
+
+
+class Job(models.Model):
+    JOBS_TITLES = (
+        ('developer', 'Software Developer'),
+        ('designer', 'Graphic Designer'),
+        ('manager', 'Project Manager'),
+        ('analyst', 'Business Analyst'),
+        ('engineer', 'Mechanical Engineer'),
+    )
+    title = models.CharField(max_length=100, choices=JOBS_TITLES)
+    location = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    requirements = models.TextField(null=True, blank=True)
+    published_at = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    is_active = models.BooleanField(default=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Candidate(models.Model):
@@ -8,6 +29,7 @@ class Candidate(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True, blank=True)
     resume_url = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
@@ -24,14 +46,8 @@ class Interview(models.Model):
         ('Completed', 'Completed'),
         ('Canceled', 'Canceled'),
     )
-    JOBS_CHOICES = (
-        ('developer', 'Software Developer'),
-        ('designer', 'Graphic Designer'),
-        ('manager', 'Project Manager'),
-        ('analyst', 'Business Analyst'),
-        ('engineer', 'Mechanical Engineer'),
-    )
-    job = models.CharField(max_length=50, choices=JOBS_CHOICES)
+
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True, blank=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
     date = models.DateField(validators=(custom_validators.future_date_validator,))
@@ -55,16 +71,7 @@ class FeedbackInterview(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2)
 
 
-# class Job(models.Model):
-#     title = models.CharField(max_length=100)
-#     location = models.CharField(max_length=100, null=True, blank=True)
-#     description = models.TextField(null=True, blank=True)
-#     requirements = models.TextField(null=True, blank=True)
-#     published_at = models.DateTimeField(auto_now_add=True)
-#     is_active = models.BooleanField(default=True)
-#
-#     def __str__(self):
-#         return self.title
+
 
 # class Notification(models.Model):
 #     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

@@ -6,10 +6,11 @@ from . import views
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='base/home-page.html'), name="home"),
+    path('create-job', views.create_job, name="create job"),
     path('add-candidate/', views.add_candidate, name="add candidate"),
     path('candidate-list/', views.candidate_list, name='candidate list'),
     path('add-interview/', views.add_interview, name='add interview'),
-    path('interviews/', views.show_interviews, name='show interviews'),
+    path('interviews/', views.show_interviews, name='interviews list'),
     path('add-feedback/', views.create_feedback, name="add feedback"),
     path('show-feedback/', views.show_feedbacks, name="show feedbacks"),
     path('manage-interviews/<int:pk>/', views.update_interview_status, name='interview update'),

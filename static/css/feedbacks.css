@@ -13,7 +13,6 @@
     color: #007BFF;
 }
 
-/* Center the form on the page */
 .feedback-form {
     display: flex;
     flex-direction: column;
@@ -25,7 +24,10 @@
     background-color: #f8f8f8;
 }
 
-/* Style form elements */
+.feedback-form p {
+    width: 30%;
+}
+
 .feedback-form input[type="text"],
 .feedback-form input[type="number"],
 .feedback-form textarea {
@@ -38,11 +40,11 @@
 }
 
 .feedback-form textarea {
-    height: 100px; /* Adjust the height as needed */
+    height: 100px;
 }
 
 .feedback-form button {
-    background-color: #007BFF; /* Adjust the button color */
+    background-color: #007BFF;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -58,7 +60,7 @@
 .feedback-form input[type="text"]:focus,
 .feedback-form input[type="number"]:focus,
 .feedback-form textarea:focus {
-    border: 2px solid #007BFF; /* Change the border color on hover/focus */
+    border: 2px solid #007BFF;
 }
 
 .feedback-title {
@@ -106,3 +108,4 @@
     color: #777;
     font-style: italic;
 }
+

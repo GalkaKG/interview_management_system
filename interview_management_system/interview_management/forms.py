@@ -2,7 +2,22 @@ from datetime import datetime
 
 from django import forms
 
-from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview
+from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview, Job
+
+
+class CreateJobForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        exclude = ['published_at']
+
+        widgets = {
+            'description': forms.Textarea(
+                attrs={'rows': 5, 'placeholder': 'Add description...'}
+            ),
+            'requirements': forms.Textarea(
+                attrs={'rows': 5, 'placeholder': 'Add requirements...'}
+            ),
+        }
 
 
 class AddCandidateForm(forms.ModelForm):

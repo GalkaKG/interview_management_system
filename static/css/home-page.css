@@ -105,3 +105,61 @@ footer a:hover, footer i:hover {
 img {
     width: 400px;
 }
+
+
+/* Style for the About Page */
+.about-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+
+/* Heading Styles */
+.about-page h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.about-page h3 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #007BFF; /* Accent color, you can choose your own */
+}
+
+/* Paragraph Styles */
+.about-page p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* List Styles */
+.about-page ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.about-page li {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Contact Section */
+.about-page h3:last-child {
+    margin-top: 40px;
+}
+
+/* Link Styles */
+.about-page a {
+    text-decoration: none;
+    color: #007BFF; /* Accent color, you can choose your own */
+}
+
+.about-page a:hover {
+    text-decoration: underline;
+}

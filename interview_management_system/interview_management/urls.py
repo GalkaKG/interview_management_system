@@ -5,7 +5,8 @@ from . import views
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='base/home-page.html'), name="home"),
+    path('', TemplateView.as_view(template_name='base/home-page.html'), name='home'),
+    path('about', TemplateView.as_view(template_name='base/about.html'), name='about'),
     path('create-job', views.create_job, name="create job"),
     path('add-candidate/', views.add_candidate, name="add candidate"),
     path('candidate-list/', views.candidate_list, name='candidate list'),

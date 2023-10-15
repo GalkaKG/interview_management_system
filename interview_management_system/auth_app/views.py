@@ -3,12 +3,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
 from interview_management_system.auth_app.forms import CustomUserCreationForm, EditInterviewerProfileForm, \
-    EditHRProfileForm
-from interview_management_system.auth_app.models import Interviewer, HR
+    EditHRProfileForm, EditAdministratorForm
+from interview_management_system.auth_app.models import Interviewer, HR, Administrator, CustomUser
+
+
+def get_custom_user(pk):
+    try:
+        user = CustomUser.objects.get(id=pk)
+        return user
+    except CustomUser.DoesNotExist:
+        return redirect('error_404')
 
 
 class RegisterView(CreateView):
@@ -39,43 +47,55 @@ def logout_view(request):
 
 
 @login_required
-def profile_details(request):
+def profile_details(request, pk):
+    user = get_custom_user(pk)
+
     context = {}
-    if request.user.user_type == 'interviewer':
+    if user.user_type == 'interviewer':
         try:
             profile = Interviewer.objects.get(user=request.user)
             context['profile'] = profile
         except Interviewer.DoesNotExist:
-            return redirect('home')
-    elif request.user.user_type == 'hr':
+            return redirect('error_404')
+    elif user.user_type == 'hr':
         try:
             profile = HR.objects.get(user=request.user)
             context['profile'] = profile
         except HR.DoesNotExist:
-            return redirect('home')
-    else:
-        # raise Http404("Profile not found for this user type")
-        return redirect('home')
-    # profile = request.user
+            return redirect('error_404')
+    elif user.user_type == 'admin':
+        try:
+            profile = Administrator.objects.get(user=request.user)
+            context['profile'] = profile
+        except Administrator.DoesNotExist:
+            return redirect('error_404')
 
     return render(request, 'auth/profile-details.html', context)
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     template_name = 'auth/profile-edit.html'
-    success_url = reverse_lazy('home')
+
+    # success_url = reverse_lazy('profile details')
 
     def get_form_class(self):
-        user = self.request.user
+        user = get_custom_user(self.request.user.id)
         if user.user_type == 'interviewer':
             return EditInterviewerProfileForm
         elif user.user_type == 'hr':
             return EditHRProfileForm
-        # Add more cases if needed for other user types
+        else:
+            return EditAdministratorForm
 
     def get_object(self, queryset=None):
-        user = self.request.user
+        user = get_custom_user(self.request.user.id)
         if user.user_type == 'interviewer':
             return get_object_or_404(Interviewer, user=user)
         elif user.user_type == 'hr':
             return get_object_or_404(HR, user=user)
+        else:
+            return get_object_or_404(Administrator, user=user)
+
+    def get_success_url(self):
+        user = get_custom_user(self.request.user.id)
+        return reverse('profile details', kwargs={'pk': user.id})

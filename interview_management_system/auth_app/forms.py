@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from interview_management_system.auth_app.models import CustomUser, Interviewer, DEPARTMENT_CHOICES, HR
+from interview_management_system.auth_app.models import CustomUser, Interviewer, DEPARTMENT_CHOICES, HR, Administrator
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -24,3 +24,8 @@ class EditHRProfileForm(forms.ModelForm):
         model = HR
         exclude = ('user',)
 
+
+class EditAdministratorForm(forms.ModelForm):
+    class Meta:
+        model = Administrator
+        exclude = ('user', 'is_superuser',)

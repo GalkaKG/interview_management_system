@@ -506,8 +506,6 @@ components:
         id:
           type: integer
           readOnly: true
-        job:
-          $ref: '#/components/schemas/JobEnum'
         date:
           type: string
           format: date
@@ -516,6 +514,9 @@ components:
           format: time
         status:
           $ref: '#/components/schemas/StatusEnum'
+        job:
+          type: integer
+          nullable: true
         candidate:
           type: integer
         interviewer:
@@ -525,22 +526,7 @@ components:
       - date
       - id
       - interviewer
-      - job
       - time
-    JobEnum:
-      enum:
-      - developer
-      - designer
-      - manager
-      - analyst
-      - engineer
-      type: string
-      description: |-
-        * `developer` - Software Developer
-        * `designer` - Graphic Designer
-        * `manager` - Project Manager
-        * `analyst` - Business Analyst
-        * `engineer` - Mechanical Engineer
     StatusEnum:
       enum:
       - Scheduled

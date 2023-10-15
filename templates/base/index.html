@@ -56,7 +56,7 @@
         <div class="menu">
             <button class="menu-button">Menu</button>
             <div class="menu-content">
-                <a class="menu-item" href="{% url 'profile details' %}">Profile</a>
+                <a class="menu-item" href="{% url 'profile details' pk=user.id %}">Profile</a>
 {#                <a class="menu-item" href="#">Settings</a>#}
                 <a class="menu-item" href="{% url 'options logout' %}">Logout</a>
             </div>
@@ -70,6 +70,7 @@
         <div class="menu-content">
 {#            <a class="menu-item" href="#">Settings</a>#}
             <li><a class="menu-item" href="{% url 'login' %}">Login</a></li>
+            <li><a class="menu-item" href="{% url 'register' %}">Register</a></li>
         </div>
         </div>
         {% endif %}

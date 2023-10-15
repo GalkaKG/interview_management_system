@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from interview_management_system.auth_app.models import Interviewer, HR, CustomUser
+from interview_management_system.auth_app.models import Interviewer, HR, CustomUser, Administrator
 
 
 @receiver(post_save, sender=CustomUser)
@@ -10,6 +10,8 @@ def create_user_type(sender, instance, created, **kwargs):
             Interviewer.objects.create(user=instance)
         elif instance.user_type == 'hr':
             HR.objects.create(user=instance)
+        elif instance.user_type == 'admin':
+            Administrator.objects.create(user=instance)
 
 
 

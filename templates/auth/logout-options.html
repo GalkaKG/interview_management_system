@@ -17,80 +17,8 @@
 </div>
 
 <style>
-    a {
-        text-decoration: none;
-    }
-    .logout-container {
-        text-align: center;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        background-color: #f5f5f5;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
 
-    .logout-header {
-        font-size: 28px;
-        margin: 10px 0;
-        color: #333;
-    }
 
-    .logout-text {
-        font-size: 20px;
-        margin: 20px 0;
-        color: #555;
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .confirm-button, .cancel-button {
-        padding: 10px 30px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .confirm-button {
-        {#background-color: #a9a5a5;#}
-        {#color: white;#}
-        {#border: 1px solid gray;#}
-        {#color: #777777;#}
-        color: #555555;
-        border: 3px solid gray;
-    }
-
-    .cancel-button {
-        {#background-color: #00a3e0;#}
-        {#background-color: tan;#}
-        color: #555555;
-        border: 3px solid gray;
-    }
-
-    .confirm-button:hover {
-        {#background-color: #cc0000;#}
-        background-color: #777777;
-        color: white;
-    }
-
-    .cancel-button:hover {
-        {#background-color: #007BFF;#}
-        background-color: #777777;
-        color: white;
-    }
 </style>
 
-<script>
-    document.getElementById("confirm-logout").addEventListener("click", function() {
-        document.getElementById("logout-form").submit();
-    });
-
-    document.getElementById("cancel-logout").addEventListener("click", function() {
-        // Redirect or perform any other action on cancel
-    });
-</script>
 {% endblock %}

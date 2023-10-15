@@ -8,7 +8,7 @@
     {{ form.as_p }}
     <button type="submit" class="save-changes-button">Save Changes</button>
   </form>
-  <a href="{% url 'profile details' %}" class="back-to-profile-link">Back to Profile</a>
+  <a href="{% url 'profile details' pk=request.user.id%}" class="back-to-profile-link">Back to Profile</a>
 </div>
 {% endblock %}
 

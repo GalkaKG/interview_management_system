@@ -1,0 +1,11 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+  <h2>Delete {{ user_type }} User</h2>
+  <p>Are you sure you want to delete this {{ user_type }} user?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+  </form>
+  <a href="{% url 'user-list' %}" class="btn btn-secondary">Cancel</a>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-from interview_management_system.auth_app.models import Interviewer, CustomUser
+from interview_management_system.auth_app.models import CustomUser, Profile
 from . import custom_validators
 
 
@@ -14,6 +14,7 @@ class Job(models.Model):
     #     ('engineer', 'Mechanical Engineer'),
     # )
     # title = models.CharField(max_length=100, choices=JOBS_TITLES)
+
     title = models.CharField(max_length=50)
     location = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -50,7 +51,7 @@ class Interview(models.Model):
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True, blank=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
-    interviewer = models.ForeignKey(Interviewer, on_delete=models.CASCADE)
+    interviewer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(validators=(custom_validators.future_date_validator,))
     time = models.TimeField(validators=(custom_validators.future_time_validator,))
     status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)

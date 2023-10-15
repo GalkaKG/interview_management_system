@@ -7,9 +7,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
 from interview_management_system.auth_app.custom_functions import get_custom_user
-from interview_management_system.auth_app.forms import CustomUserCreationForm, EditInterviewerProfileForm, \
-    EditHRProfileForm, EditAdministratorForm
-from interview_management_system.auth_app.models import Interviewer, HR, Administrator
+from interview_management_system.auth_app.forms import CustomUserCreationForm, EditProfileForm
+from interview_management_system.auth_app.models import Profile
 
 
 class RegisterView(CreateView):
@@ -41,27 +40,12 @@ def logout_view(request):
 
 @login_required
 def profile_details(request, pk):
-    user = get_custom_user(pk)
-
     context = {}
-    if user.user_type == 'interviewer':
-        try:
-            profile = Interviewer.objects.get(user=request.user)
-            context['profile'] = profile
-        except Interviewer.DoesNotExist:
-            return redirect('error_404')
-    elif user.user_type == 'hr':
-        try:
-            profile = HR.objects.get(user=request.user)
-            context['profile'] = profile
-        except HR.DoesNotExist:
-            return redirect('error_404')
-    elif user.user_type == 'admin':
-        try:
-            profile = Administrator.objects.get(user=request.user)
-            context['profile'] = profile
-        except Administrator.DoesNotExist:
-            return redirect('error_404')
+    try:
+        profile = Profile.objects.get(user=request.user)
+        context['profile'] = profile
+    except Profile.DoesNotExist:
+        return redirect('error_404')
 
     return render(request, 'auth/profile-details.html', context)
 
@@ -69,25 +53,12 @@ def profile_details(request, pk):
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     template_name = 'auth/profile-edit.html'
 
-    # success_url = reverse_lazy('profile details')
-
     def get_form_class(self):
-        user = get_custom_user(self.request.user.id)
-        if user.user_type == 'interviewer':
-            return EditInterviewerProfileForm
-        elif user.user_type == 'hr':
-            return EditHRProfileForm
-        else:
-            return EditAdministratorForm
+        return EditProfileForm
 
     def get_object(self, queryset=None):
         user = get_custom_user(self.request.user.id)
-        if user.user_type == 'interviewer':
-            return get_object_or_404(Interviewer, user=user)
-        elif user.user_type == 'hr':
-            return get_object_or_404(HR, user=user)
-        else:
-            return get_object_or_404(Administrator, user=user)
+        return get_object_or_404(Profile, user=user)
 
     def get_success_url(self):
         user = get_custom_user(self.request.user.id)

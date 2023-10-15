@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from interview_management_system.auth_app.models import CustomUser, Interviewer, HR, Administrator
+from interview_management_system.auth_app.models import CustomUser, Profile
 
 
 @admin.register(CustomUser)
@@ -8,17 +8,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_filter = ['username', 'is_superuser']
 
 
-@admin.register(Interviewer)
-class InterviewerAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(HR)
-class HRAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Administrator)
-class AdministratorAdmin(admin.ModelAdmin):
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
     pass
 

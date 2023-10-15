@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.contrib.auth.models import Group
 
 
 class CustomUserManager(BaseUserManager):
@@ -28,13 +29,14 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(PermissionsMixin, AbstractBaseUser):
     USER_TYPES = (
-        ('interviewer', 'Interviewer'),
-        ('hr', 'HR'),
-        ('admin', 'Administrator'),
+        ('Administrator', 'Administrator'),
+        ('HR', 'HR'),
+        ('Interviewer', 'Interviewer')
     )
+    user_type = models.CharField(max_length=20, choices=USER_TYPES, )
+
     username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(max_length=100, unique=True)
-    user_type = models.CharField(max_length=20, choices=USER_TYPES, default='interviewer')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=True)
@@ -44,49 +46,26 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
 
     objects = CustomUserManager()
 
+    def save(self, *args, **kwargs):
+        if self.user_type == 'Administrator':
+            self.is_staff = True
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.username
 
 
-DEPARTMENT_CHOICES = (
-    ('HR', 'Human Resources'),
-    ('IT', 'Information Technology'),
-    ('SALES', 'Sales'),
-)
-
-
-class Interviewer(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    department = models.CharField(max_length=50, blank=True, null=True, choices=DEPARTMENT_CHOICES)
+    department = models.CharField(max_length=30, blank=True, null=True)
 
-    def __str__(self):
-        return self.user.username
+    def save(self, *args, **kwargs):
 
+        if self.user.user_type:
+            group = Group.objects.get(name=self.user.user_type)
+            self.user.groups.add(group)
 
-class HR(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=30, blank=True, null=True)
-    last_name = models.CharField(max_length=30, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
-    department = models.CharField(max_length=50, blank=True, null=True, choices=DEPARTMENT_CHOICES)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Administrator(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=30, blank=True, null=True)
-    last_name = models.CharField(max_length=30, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
-    department = models.CharField(max_length=50, blank=True, null=True, choices=DEPARTMENT_CHOICES)
-    is_superuser = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.user.username
-
-
+        super().save(*args, **kwargs)

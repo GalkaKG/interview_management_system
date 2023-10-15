@@ -28,4 +28,4 @@ class EditHRProfileForm(forms.ModelForm):
 class EditAdministratorForm(forms.ModelForm):
     class Meta:
         model = Administrator
-        exclude = ('user', 'is_superuser',)
+        exclude = ('user', 'is_superuser', 'is_staff')

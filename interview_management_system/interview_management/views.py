@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
@@ -6,6 +7,7 @@ from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditI
 from .models import Interview, Candidate, FeedbackInterview
 
 
+@login_required
 def create_job(request):
     if request.method == 'POST':
         form = CreateJobForm(request.POST)
@@ -18,6 +20,7 @@ def create_job(request):
     return render(request, 'interview-management/create-job.html', {'form': form})
 
 
+@login_required
 def add_candidate(request):
     if request.method == 'POST':
         form = AddCandidateForm(request.POST)
@@ -43,6 +46,7 @@ def candidate_list(request):
     return render(request, 'interview-management/candidates-list.html', context)
 
 
+@login_required
 def candidate_delete(request, pk):
     try:
         candidate = Candidate.objects.get(id=pk)
@@ -52,6 +56,7 @@ def candidate_delete(request, pk):
         return redirect('candidate list')
 
 
+@login_required
 def add_interview(request):
     if request.method == 'POST':
         form = InterviewForm(request.POST)
@@ -72,6 +77,7 @@ def show_interviews(request):
     return render(request, 'interview-management/interviews-list.html', context)
 
 
+@login_required
 def create_feedback(request):
     if request.method == 'POST':
         form = FeedbackInterviewForm(request.POST)
@@ -96,6 +102,7 @@ def show_feedbacks(request):
     return render(request, 'interview-management/show-feedbacks.html', context)
 
 
+@login_required
 def update_interview_status(request, pk):
     interview = Interview.objects.get(id=pk)
     if request.method == 'POST':
@@ -109,6 +116,7 @@ def update_interview_status(request, pk):
     return redirect('interviews list')
 
 
+@login_required
 def delete_interview(request, pk):
     interview = get_object_or_404(Interview, pk=pk)
 

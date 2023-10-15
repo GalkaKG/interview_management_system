@@ -1,6 +1,5 @@
-/* styles.css */
-
 /* Style the candidate list container */
+
 .candidate-list {
     margin: 20px;
     padding: 20px;
@@ -80,4 +79,65 @@
 
 .add-candidate-container button:hover {
     background-color: #0056b3;
+}
+
+
+/* Style the table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Style the table headers */
+.table th {
+    background-color: #f5f5f5;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Style the table rows */
+.table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Style the buttons */
+.btn {
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #007BFF; /* Adjust button color */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007BFF;
+}
+
+.btn-danger {
+    background-color: #FF0000; /* Adjust button color */
+}
+
+/* Style the header */
+h2 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Style the user feedback */
+.user-feedback {
+    margin-top: 10px;
+}
+
+/* Center the table on the page */
+.candidate-list {
+    display: flex;
+    justify-content: center;
 }

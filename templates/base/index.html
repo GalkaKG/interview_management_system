@@ -47,12 +47,14 @@
 <nav>
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'candidate list' %}">View Candidates</a></li>
+        <li><a href="{% url 'interviews list' %}">View Upcoming Interviews</a></li>
+        <li><a href="{% url 'show feedbacks' %}">Feedbacks</a></li>
+      {% if user.is_authenticated %}
         <li><a href="{% url 'create job' %}">Create Job</a></li>
         <li><a href="{% url 'add interview' %}">Schedule Interview</a></li>
-        <li><a href="{% url 'interviews list' %}">View Upcoming Interviews</a></li>
         <li><a href="{% url 'add candidate' %}">Add New Candidate</a></li>
-        <li><a href="{% url 'candidate list' %}">View Candidates</a></li>
-        {% if user.is_authenticated %}
+
         <div class="menu">
             <button class="menu-button">Menu</button>
             <div class="menu-content">
@@ -61,10 +63,7 @@
                 <a class="menu-item" href="{% url 'options logout' %}">Logout</a>
             </div>
         </div>
-{#            <li><a href="{% url 'profile details' %}">Profile</a></li>#}
-{#            <li><a href="{% url 'logout' %}">Logout</a></li>#}
         {% else %}
-{#            <li><a href="{% url 'login' %}">Login</a></li>#}
         <div class="menu">
         <button class="menu-button">Menu</button>
         <div class="menu-content">

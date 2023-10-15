@@ -11,8 +11,10 @@
         <th>Status</th>
         <th>Candidate</th>
         <th>Interviewer</th>
+      {% if user.is_authenticated %}
         <th>Change Status</th>
         <th>Delete Interview</th>
+      {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -23,11 +25,13 @@
       <td class="{{ interview.status}}">{{ interview.get_status_display }}</td>
         <td>{{ interview.candidate }}</td>
         <td>{{ interview.interviewer }}</td>
+        {% if user.is_authenticated %}
         <td class="options-status">
             <form method="post" action="{% url 'interview update' pk=interview.id %}" class="options-status">
              {% csrf_token %}
                  <select name="status" id="status_{{ interview.id }}">
                     <option value="Scheduled" {% if interview.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                    <option value="InProgress" {% if interview.status == 'InProgress' %}selected{% endif %}>In Progress</option>
                     <option value="Completed" {% if interview.status == 'Completed' %}selected{% endif %}>Completed</option>
                     <option value="Canceled" {% if interview.status == 'Canceled' %}selected{% endif %}>Canceled</option>
                 </select>
@@ -37,6 +41,7 @@
         <td class="delete-interview">
           <a href="{% url 'delete interview' pk=interview.id %}" class="delete-interview-button">Delete</a>
         </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>

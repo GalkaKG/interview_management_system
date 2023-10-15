@@ -1,16 +1,33 @@
 {% extends 'base/index.html' %}
 
 {% block content %}
+<h2>Candidates List</h2>
 <div class="candidate-list">
-  <h2>Candidates List</h2>
-  <ul>
-    {% for candidate in candidates %}
-        <div class="user-feedback">
-          <li>{{ candidate.first_name }} {{ candidate.last_name }}</li>
-          <a href="{% url 'add feedback' %}">Add Feedback</a>
-          <a href="{% url 'delete candidate' candidate.id %}">Delete Candidate</a>
-        </div>
-    {% endfor %}
-  </ul>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job Title</th>
+                {% if request.user.is_authenticated %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidate in candidates %}
+            <tr>
+                <td>{{ candidate.first_name }} {{ candidate.last_name }}</td>
+                <td>{{ candidate.job.title }}</td>
+                <td>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'add feedback' %}" class="btn btn-primary">Add Feedback</a>
+                    <a href="{% url 'delete candidate' candidate.id %}" class="btn btn-danger">Delete Candidate</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

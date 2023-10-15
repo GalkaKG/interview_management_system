@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView
+
 from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm
 from .models import Interview, Candidate, FeedbackInterview
 
@@ -26,6 +29,15 @@ def candidate_list(request):
         'interviews': interviews,
     }
     return render(request, 'interview-management/candidates-list.html', context)
+
+
+def candidate_delete(request, pk):
+    try:
+        candidate = Candidate.objects.get(id=pk)
+        candidate.delete()
+        return redirect('candidate list')
+    except Candidate.DoesNotExist:
+        return redirect('candidate list')
 
 
 def add_interview(request):
@@ -124,9 +136,6 @@ def custom_404(request, exception):
 #     interviews = Interview.objects.all()
 #
 #     return render(request, 'interview-management/interviews-management.html', {'interviews': interviews})
-
-
-
 
 
 # In your views, when an interview is completed and feedback is needed

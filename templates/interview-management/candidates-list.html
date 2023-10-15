@@ -8,6 +8,7 @@
         <div class="user-feedback">
           <li>{{ candidate.first_name }} {{ candidate.last_name }}</li>
           <a href="{% url 'add feedback' %}">Add Feedback</a>
+          <a href="{% url 'delete candidate' candidate.id %}">Delete Candidate</a>
         </div>
     {% endfor %}
   </ul>

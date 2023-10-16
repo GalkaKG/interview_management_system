@@ -6,8 +6,8 @@ class Command(BaseCommand):
     help = 'Create user groups'
 
     def handle(self, *args, **options):
-        administrator_group, _ = Group.objects.get_or_create(name='Administrators')
+        administrator_group, _ = Group.objects.get_or_create(name='Administrator')
         hr_group, _ = Group.objects.get_or_create(name='HR')
-        interviewer_group, _ = Group.objects.get_or_create(name='Interviewers')
+        interviewer_group, _ = Group.objects.get_or_create(name='Interviewer')
 
         self.stdout.write(self.style.SUCCESS('User groups created successfully.'))

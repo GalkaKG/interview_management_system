@@ -1,9 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import os
-from datetime import timedelta
 
 from celery import Celery
-from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'interview_management_system.settings')
 
@@ -18,14 +16,13 @@ app.autodiscover_tasks()
 def debug_task(self):
     print(f"Request: {self.request!r}")
 
-
 # app.conf.beat_schedule = {
 #     'add': {
 #         'task': 'interview_management_system.management_system.tasks.add',
 #         'schedule': crontab(minute='0', hour='0'),
 #     },
-    # 'enable-scheduler': {
-    #     'task': 'celery.beat.Beat',
-    #     'schedule': timedelta(seconds=10),
-    # },
+# 'enable-scheduler': {
+#     'task': 'celery.beat.Beat',
+#     'schedule': timedelta(seconds=10),
+# },
 # }

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AddCandidateForm, InterviewForm, FeedbackInterviewForm, EditInterviewStatusForm, CreateJobForm
 from .models import Interview, Candidate, FeedbackInterview
+from .signals import interview_updated
 
 
 @login_required
@@ -105,6 +106,7 @@ def update_interview_status(request, pk):
     if request.method == 'POST':
         form = EditInterviewStatusForm(request.POST, instance=interview)
         if form.is_valid():
+            interview_updated.send(sender=request.user, interview_id=id)
             form.save()
             return redirect('interviews list')
     else:
@@ -128,26 +130,9 @@ def custom_404(request, exception):
     return render(request, 'error-pages/error-page.html', status=404)
 
 
-async def send_feedback_needed_notification(interviewer):
-    channel_layer = get_channel_layer()
-    await channel_layer.group_add(
-        "interviewer-{}".format(interviewer.id),
-        "feedback_reminder_group"
-    )
-    await channel_layer.group_send(
-        "feedback_reminder_group",
-        {"type": "notify.feedback.needed"}
-    )
-
-
 from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
-
-async def interview_completed(request):
-    # ... your logic to determine that feedback is needed ...
-    interviewer_id = request.user.id
-    # Notify the WebSocket consumer
+def send_notification(message):
     channel_layer = get_channel_layer()
-    group_name = f"interviewer-{interviewer_id}"  # Replace with the actual interviewer's ID
-    await channel_layer.group_add(group_name, "feedback_reminder_group")
-    await channel_layer.group_send(group_name, {"type": "notify.feedback.needed"})
+    async_to_sync(channel_layer.group_send)("Interviewer", {"type": "notification.message", "message": message})

@@ -4,21 +4,18 @@ from pathlib import Path
 from celery.schedules import crontab
 from dotenv import load_dotenv
 
-
 # Load environment variables from .env file
 load_dotenv()
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-SECRET_KEY = 'django-insecure-_na47e+1yt3%dokt$iaamdf%3h!c^2^hdb@el)ro_3mo+7=h9d'
+SECRET_KEY = os.getenv('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.getenv('DEBUG', 1)))  # Now is True
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
+CSRF_TRUSTED_ORIGINS = [f'http://{x}:80' for x in os.environ.get('ALLOWED_HOSTS', '').split(' ')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,7 +42,6 @@ INSTALLED_APPS = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-
 MIDDLEWARE = [
     # 'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -63,8 +59,7 @@ ROOT_URLCONF = 'interview_management_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,11 +78,11 @@ ASGI_APPLICATION = 'interview_management_system.asgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "interview_management_system_db",
-        "USER": "postgres-user",
-        "PASSWORD": "password",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": os.getenv('DB_NAME', None),
+        "USER": os.getenv('DB_USER', None),
+        "PASSWORD": os.getenv('DB_PASSWORD', None),
+        "HOST": os.getenv('DB_HOST', None),
+        "PORT": os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -118,7 +113,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
@@ -140,9 +134,9 @@ REST_FRAMEWORK = {
     ],
 }
 
-OAUTH2_PROVIDER = {
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
+# OAUTH2_PROVIDER = {
+#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+# }
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Interview Management system",
@@ -150,10 +144,10 @@ SPECTACULAR_SETTINGS = {
 
 LOGIN_URL = 'login/'
 
+# CELERY_RESULT_BACKEND = 'rpc://'
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
-
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 CELERY_BEAT_SCHEDULE = {
@@ -163,6 +157,11 @@ CELERY_BEAT_SCHEDULE = {
     },
     'delete_completed_interviews': {
         'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
-        'schedule': crontab(minute='*'),   # Every 1 minute
+        'schedule': crontab(minute='*'),  # Every 1 minute
+    },
+    'add': {
+        'task': 'interview_management_system.interview_management.tasks.add',
+        'schedule': timedelta(seconds=60),  # Run the task every 60 seconds
     },
 }
+

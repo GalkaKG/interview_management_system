@@ -1,52 +1,25 @@
+<!-- Your HTML template -->
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-/* Style the notification container */
-.notification-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  display: none;
-}
-
-/* Style the close button */
-.close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 5px;
-  cursor: pointer;
-}
-</style>
+    <title>Real-time Notifications</title>
 </head>
 <body>
-<!-- The notification container -->
-<div id="notification-container" class="notification-container">
-  <span id="notification-message">This is a sample notification.</span>
-  <span class="close-button" onclick="closeNotification()">&times;</span>
-</div>
+    <h1>Real-time Notifications</h1>
 
-<!-- Button to trigger a test notification -->
-<button onclick="showNotification()">Show Notification</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/websocket.js/1.0.1/websocket.min.js"></script>
+    <script>
+        var socket = new WebSocket("ws://yourdomain.com/ws/some_path/");
 
-<script>
-// Function to show the notification
-function showNotification() {
-  var notificationContainer = document.getElementById("notification-container");
-  notificationContainer.style.display = "block";
-}
+        socket.onopen = function(e) {
+            console.log("WebSocket connection opened.");
+        };
 
-// Function to close the notification
-function closeNotification() {
-  var notificationContainer = document.getElementById("notification-container");
-  notificationContainer.style.display = "none";
-}
-</script>
-
+        socket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            alert("New Notification: " + data.message);
+        };
+    </script>
 </body>
 </html>
+

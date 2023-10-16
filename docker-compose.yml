@@ -24,6 +24,7 @@ services:
       - .env
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+
   nginx:
     image: nginx
     ports:
@@ -47,15 +48,29 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    command: sh -c "export DJANGO_SETTINGS_MODULE=interview_management_system.settings && celery -A interview_management_system worker --loglevel=info"
+    command: sh -c "celery -A interview_management_system worker -l info"
     depends_on:
       - web
+      - rabbit
+
   celery-beat:
     build:
       context: .
       dockerfile: Dockerfile
-    command: sh -c "export DJANGO_SETTINGS_MODULE=interview_management_system.settings && celery -A interview_management_system beat --loglevel=info"
+    command: sh -c "celery -A interview_management_system beat -l info"
     env_file:
       - .env
     depends_on:
       - web
+
+#  rabbitmq:
+#    image: "rabbitmq:management"
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    environment:
+#      RABBITMQ_DEFAULT_USER: guest
+#      RABBITMQ_DEFAULT_PASS: guest
+
+  rabbit:
+    image: rabbitmq:latest

@@ -51,7 +51,7 @@ class Interview(models.Model):
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True, blank=True)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
-    interviewer = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    interviewer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date = models.DateField(validators=(custom_validators.future_date_validator,))
     time = models.TimeField(validators=(custom_validators.future_time_validator,))
     status = models.CharField(max_length=20, default='Scheduled', choices=STATUS_CHOICES)

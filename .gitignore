@@ -1,5 +1,7 @@
 .idea/
 
+postgresql
+
 .env
 
 ### Django ###

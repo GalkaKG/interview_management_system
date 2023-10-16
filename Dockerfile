@@ -9,8 +9,10 @@ RUN pip install -r requirements.txt
 
 COPY manage.py /app/manage.py
 COPY nginx /app/nginx
+COPY schema.yml /app/schema.yml
 COPY static /app/static
 COPY static_root /app/static_root
 COPY templates /app/templates
-COPY schema.yml /app/schema.yml
 COPY interview_management_system /app/interview_management_system
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

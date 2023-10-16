@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -73,16 +72,28 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'interview_management_system.wsgi.application'
-ASGI_APPLICATION = 'interview_management_system.asgi.application'
+# ASGI_APPLICATION = 'interview_management_system.asgi.application'
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv('DB_NAME', None),
+#         "USER": os.getenv('DB_USER', None),
+#         "PASSWORD": os.getenv('DB_PASSWORD', None),
+#         "HOST": os.getenv('DB_HOST', None),
+#         "PORT": os.getenv('DB_PORT', '5432'),
+#     }
+# }
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv('DB_NAME', None),
-        "USER": os.getenv('DB_USER', None),
-        "PASSWORD": os.getenv('DB_PASSWORD', None),
-        "HOST": os.getenv('DB_HOST', None),
-        "PORT": os.getenv('DB_PORT', '5432'),
+        "NAME": "interview_management_system_db",
+        "USER": "postgres",
+        "PASSWORD": "password",
+        # "HOST": "127.0.0.1",
+        "HOST": "postgres",
+        "PORT": '5432',
     }
 }
 
@@ -104,6 +115,8 @@ DATABASES = {
 #     },
 # ]
 
+if DEBUG:
+    AUTH_PASSWORD_VALIDATORS = []
 
 LANGUAGE_CODE = 'en-us'
 

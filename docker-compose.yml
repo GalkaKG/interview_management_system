@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web:
-    image: galka777/interview_management_system:0.1
+    image: galka777/interview_management_system
     command: gunicorn interview_management_system.wsgi:application --bind 0.0.0.0:8000
     build: .
     volumes:
@@ -20,11 +20,14 @@ services:
     restart: always
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres-user
+      POSTGRES_DB: interview_management_system_db
     env_file:
       - .env
     volumes:
       - ./postgresql:/var/lib/postgresql/data
-
   nginx:
     image: nginx
     ports:
@@ -42,26 +45,3 @@ services:
     links:
       - web
 
-  celery-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    command: sh -c "celery -A interview_management_system worker -l info"
-    depends_on:
-      - web
-#      - rabbit
-
-  celery-beat:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: sh -c "celery -A interview_management_system beat -l info"
-    env_file:
-      - .env
-    depends_on:
-      - web
-
-  rabbit:
-    image: rabbitmq:latest

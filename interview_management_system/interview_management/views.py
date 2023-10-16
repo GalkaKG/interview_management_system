@@ -11,7 +11,7 @@ def create_job(request):
         form = CreateJobForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('interviews list')
+            return redirect('add interview')
     else:
         form = CreateJobForm()
 
@@ -130,9 +130,9 @@ def custom_404(request, exception):
     return render(request, 'error-pages/error-page.html', status=404)
 
 
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-
-def send_notification(message):
-    channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)("Interviewer", {"type": "notification.message", "message": message})
+# from channels.layers import get_channel_layer
+# from asgiref.sync import async_to_sync
+#
+# def send_notification(message):
+#     channel_layer = get_channel_layer()
+#     async_to_sync(channel_layer.group_send)("Interviewer", {"type": "notification.message", "message": message})

@@ -34,7 +34,7 @@ services:
       - web
     volumes:
       - ./static_root:/app/static_root/
-      - ./media:/app/media/
+#      - ./media:/app/media/
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/logs:/var/log/nginx
       - ./certbot/www:/var/www/certbot/:ro
@@ -51,7 +51,7 @@ services:
     command: sh -c "celery -A interview_management_system worker -l info"
     depends_on:
       - web
-      - rabbit
+#      - rabbit
 
   celery-beat:
     build:
@@ -62,15 +62,6 @@ services:
       - .env
     depends_on:
       - web
-
-#  rabbitmq:
-#    image: "rabbitmq:management"
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    environment:
-#      RABBITMQ_DEFAULT_USER: guest
-#      RABBITMQ_DEFAULT_PASS: guest
 
   rabbit:
     image: rabbitmq:latest

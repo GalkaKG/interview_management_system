@@ -1,0 +1,111 @@
+.user-feedback {
+    display: flex;
+    align-items: center;
+    gap: 30%;
+}
+
+.user-feedback a {
+    text-decoration: none;
+    color: #254d5c;
+}
+
+.user-feedback a:hover {
+    color: #007BFF;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+.feedback-form p {
+    width: 30%;
+}
+
+.feedback-form input[type="text"],
+.feedback-form input[type="number"],
+.feedback-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.feedback-form textarea {
+    height: 100px;
+}
+
+.feedback-form button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Style form elements on hover and focus */
+.feedback-form input[type="text"]:hover,
+.feedback-form input[type="number"]:hover,
+.feedback-form textarea:hover,
+.feedback-form input[type="text"]:focus,
+.feedback-form input[type="number"]:focus,
+.feedback-form textarea:focus {
+    border: 2px solid #007BFF;
+}
+
+.feedback-title {
+    text-align: center;
+}
+
+
+/* Show feedbacks */
+
+.feedback-list {
+    text-align: center;
+    margin: 20px;
+}
+
+.feedback-title {
+    font-size: 24px;
+}
+
+.feedback-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+.feedback-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f8f8f8;
+}
+
+.result {
+    font-weight: bold;
+}
+
+.rating {
+    color: #007BFF;
+}
+
+.feedback-text {
+    margin-top: 10px;
+}
+
+.no-feedback {
+    color: #777;
+    font-style: italic;
+}
+

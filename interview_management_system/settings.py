@@ -89,9 +89,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "interview_management_system_db",
-        "USER": "postgres",
+        "USER": "postgres-user",
         "PASSWORD": "password",
-        # "HOST": "127.0.0.1",
         "HOST": "postgres",
         "PORT": '5432',
     }
@@ -157,7 +156,7 @@ SPECTACULAR_SETTINGS = {
 
 LOGIN_URL = 'login/'
 
-# CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_RESULT_BACKEND = 'rpc://'
 # CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

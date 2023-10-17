@@ -279,3 +279,13 @@ def generating_reports(request, format=None):
         feedbacks = FeedbackInterview.objects.all()
         serializer = FeedbackInterviewSerializer(feedbacks, many=True)
         return Response(serializer.data)
+
+
+candidates_list.serializer_class = CandidatesSerializer
+candidate_details.serializer_class = CandidatesSerializer
+edit_candidate.serializer_class = CandidatesSerializer
+delete_candidate.serializer_class = CandidatesSerializer
+list_all_interviews.serializer_class = InterviewSerializer
+create_interview.serializer_class = InterviewSerializer
+update_interview_status.serializer_class = InterviewSerializer
+generating_reports.serializer_class = FeedbackInterviewSerializer

@@ -25,8 +25,8 @@ services:
       POSTGRES_DB: interview_management_system_db
     env_file:
       - .env
-    volumes:
-      - ./postgresql:/var/lib/postgresql/data
+#    volumes:
+#      - ./postgresql:/var/lib/postgresql/data
   nginx:
     image: nginx
     ports:

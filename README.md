@@ -67,14 +67,11 @@ Before you begin, ensure you have met the following requirements:
 
 <h2>Use the website API</h2>
 
-[//]: # (<p>To get JWT Token send POST request to : http://3.121.115.133/gettoken/   with your email and password details.)
-
-[//]: # (Visit the Api link in the site</p>)
-<h3>Obtain JWT Token</h3>
-<p>To get a JWT token, send a POST request to: https://example.com/gettoken/ with your email and password details in the request body. Use the following format:</p>
+<h3>Obtain JWT (Token)</h3>
+<p>To get a JWT token, send a POST request to: http://3.121.115.133/gettoken/ with your email and password details in the request body. Use the following format:</p>
 
 <pre>
-POST https:http://3.121.115.133/gettoken/
+POST http://3.121.115.133/gettoken/
 Content-Type: application/json
 
 {

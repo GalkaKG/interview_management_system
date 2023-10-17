@@ -9,6 +9,7 @@ from django.views.generic import CreateView, UpdateView
 from interview_management_system.auth_app.custom_functions import get_custom_user
 from interview_management_system.auth_app.forms import CustomUserCreationForm, EditProfileForm
 from interview_management_system.auth_app.models import Profile
+from interview_management_system.interview_management.models import Interview
 
 
 class RegisterView(CreateView):
@@ -44,6 +45,8 @@ def profile_details(request, pk):
     try:
         profile = Profile.objects.get(user=request.user)
         context['profile'] = profile
+        user_interviews = Interview.objects.filter(interviewer=request.user)
+        context['user_interviews'] = user_interviews
     except Profile.DoesNotExist:
         return redirect('error_404')
 
@@ -65,7 +68,7 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         return reverse('profile details', kwargs={'pk': user.id})
 
 
-# @login_required  # Apply login required if you want to ensure the user is logged in.
+# @login_required
 # class CustomUserDeleteView(DeleteView):
 #     model = CustomUser
 #     success_url = reverse_lazy('home')  # Change 'user-list' to the URL name for your user list view

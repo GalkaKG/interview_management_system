@@ -48,44 +48,62 @@
   </table>
 </div>
 
-{#<script>#}
-{#    const currURL = window.location.href#}
-{#    const updateBtn = document.querySelectorAll('.update-status-button');#}
-{#    const options = document.querySelectorAll('.options-status option')#}
-{#    console.log(options.value)#}
-{#</script>#}
-
-{#<script>#}
-{#  // Add a change event listener to the <select> elements#}
-{#  const statusSelects = document.querySelectorAll('.status-select');#}
-{#  statusSelects.forEach(select => {#}
-{#    select.addEventListener('change', function () {#}
-{#      const newStatus = this.value;#}
-{#      const interviewId = this.getAttribute('data-interview-id');#}
-{#      const initialStatus = this.getAttribute('data-status');#}
-{##}
-{#      if (newStatus !== initialStatus) {#}
-{#        // Send an AJAX request to update the status#}
-{#        fetch(`http://127.0.0.1:8000/manage-interviews/${interviewId}/?new_status=${newStatus}`, {#}
-{#          method: 'GET',  // You can use GET or POST as per your needs#}
-{#        })#}
-{#          .then(response => response.json())#}
-{#          .then(data => {#}
-{#            // Handle the response if needed#}
-{#            if (data.message === 'Status updated successfully') {#}
-{#              // Update the initial status to the new status in the data-status attribute#}
-{#              this.setAttribute('data-status', newStatus);#}
-{#            }#}
-{#          })#}
-{#          .catch(error => {#}
-{#            console.error('Error:', error);#}
-{#          });#}
-{#      }#}
-{#    });#}
-{#  });#}
-{#</script>#}
-
-
-
 
 {% endblock %}
+
+
+
+{#{% extends 'base/index.html' %}#}
+{##}
+{#{% block content %}#}
+{#  <h1 class="interviews-list-title">Interviews</h1>#}
+{#  <div class="interviews-list-div">#}
+{#    <table class="interview-table">#}
+{#      <thead>#}
+{#        <tr>#}
+{#          <th>Date</th>#}
+{#          <th>Time</th>#}
+{#          <th>Status</th>#}
+{#          <th>Candidate</th>#}
+{#          <th>Interviewer</th>#}
+{#          {% if user.is_authenticated %}#}
+{#            <th>Change Status</th>#}
+{#            <th>Delete Interview</th>#}
+{#          {% endif %}#}
+{#        </tr>#}
+{#      </thead>#}
+{#      <tbody>#}
+{#        {% for interview in interviews %}#}
+{#          <tr>#}
+{#            <td>{{ interview.date }}</td>#}
+{#            <td>{{ interview.time }}</td>#}
+{#            <td class="{{ interview.status }}">{{ interview.get_status_display }}</td>#}
+{#            <td>{{ interview.candidate }}</td>#}
+{#            <td>{{ interview.interviewer }}</td>#}
+{#            {% if user.is_authenticated %}#}
+{#              {% if user == interview.interviewer %}#}
+{#                <td class="options-status">#}
+{#                  <form method="post" action="{% url 'interview update' pk=interview.id %}" class="options-status">#}
+{#                    {% csrf_token %}#}
+{#                    <select name="status" id="status_{{ interview.id }}">#}
+{#                      <option value="Scheduled" {% if interview.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>#}
+{#                      <option value="InProgress" {% if interview.status == 'InProgress' %}selected{% endif %}>In Progress</option>#}
+{#                      <option value="Completed" {% if interview.status == 'Completed' %}selected{% endif %}>Completed</option>#}
+{#                      <option value="Canceled" {% if interview.status == 'Canceled' %}selected{% endif %}>Canceled</option>#}
+{#                    </select>#}
+{#                    <button class="update-status-button" data-interview-id="{{ interview.id }}">Update</button>#}
+{#                  </form>#}
+{#                </td>#}
+{#              {% else %}#}
+{#                <td></td> {# Placeholder to maintain consistent row structure #}
+{#              {% endif %}#}
+{#              <td class="delete-interview">#}
+{#                <a href="{% url 'delete interview' pk=interview.id %}" class="delete-interview-button">Delete</a>#}
+{#              </td>#}
+{#            {% endif %}#}
+{#          </tr>#}
+{#        {% endfor %}#}
+{#      </tbody>#}
+{#    </table>#}
+{#  </div>#}
+{#{% endblock %}#}

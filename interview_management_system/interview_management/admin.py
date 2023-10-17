@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview
+from interview_management_system.interview_management.models import Candidate, Interview, FeedbackInterview, Job
+
+
+@admin.register(Job)
+class JobAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Candidate)

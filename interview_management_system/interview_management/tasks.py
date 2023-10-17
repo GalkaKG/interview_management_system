@@ -41,6 +41,10 @@ def update_interview_statuses():
         hour_interview = int(hour_interview)
         minutes_interview = int(minutes_interview)
 
+        if minutes_interview + 10 > 60:
+            minutes_interview -= 60
+            hours += 1
+
         if hour_interview <= current_hour and minutes_interview <= current_minutes and interview.date <= current_date:
             interview.status = 'InProgress'
             interview.save()
@@ -49,6 +53,10 @@ def update_interview_statuses():
         hour_interview, minutes_interview, sec_interview = str(interview.time).split(":")
         hour_interview = int(hour_interview)
         minutes_interview = int(minutes_interview)
+
+        if minutes_interview + 10 > 60:
+            minutes_interview -= 60
+            hours += 1
 
         if hour_interview <= current_hour and minutes_interview + 10 <= current_minutes and interview.date <= current_date:
             interview.status = 'Completed'

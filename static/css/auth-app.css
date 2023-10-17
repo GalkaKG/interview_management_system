@@ -1,71 +1,5 @@
-/*!* Your CSS styles here *!*/
-/*.form-container {*/
-/*    width: 300px;*/
-/*    margin: 7% auto;*/
-/*    padding: 20px;*/
-/*    background-color: #f2f2f2;*/
-/*    border: 1px solid #ddd;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-/*.form-container h2 {*/
-/*    text-align: center;*/
-/*    color: #333;*/
-/*}*/
-
-/*.form-container label {*/
-/*    display: block;*/
-/*    font-weight: bold;*/
-/*    margin-bottom: 5px;*/
-/*    color: #555;*/
-/*}*/
-
-/*.form-container input[type="text"],*/
-/*.form-container input[type="password"] {*/
-/*    width: 94%;*/
-/*    padding: 8px;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 3px;*/
-/*}*/
-
-/*.form-container button[type="submit"] {*/
-/*    background-color: #007bff;*/
-/*    color: white;*/
-/*    border: none;*/
-/*    border-radius: 3px;*/
-/*    padding: 10px 15px;*/
-/*    cursor: pointer;*/
-/*    width: 100%;*/
-/*    margin-top: 10px;*/
-/*}*/
-
-/*.form-container button[type="submit"]:hover {*/
-/*    background-color: #0056b3;*/
-/*}*/
-
-/*.form-container p {*/
-/*    text-align: center;*/
-/*    margin-top: 10px;*/
-/*}*/
-
-/*.form-container p a {*/
-/*    color: #007bff;*/
-/*    text-decoration: none;*/
-/*}*/
-
-/*.form-container p a:hover {*/
-/*    text-decoration: underline;*/
-/*}*/
-
-/*!* Hide the registration form initially *!*/
-/*#register-form {*/
-/*    display: none;*/
-/*}*/
-
-
-
-
 /* Style for the form container */
+
 .register {
   width: 300px;
   margin: 3% auto;
@@ -122,8 +56,6 @@
 .form button[type="submit"]:hover {
   background-color: #0056b3;
 }
-
-
 
 
 

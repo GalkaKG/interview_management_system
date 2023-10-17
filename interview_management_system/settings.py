@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'channels',
     'corsheaders',
     # 'oauth2_provider',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -156,14 +156,13 @@ SPECTACULAR_SETTINGS = {
 
 LOGIN_URL = 'login/'
 
-RABBITMQ_HOST = 'localhost'  # RabbitMQ server host
-RABBITMQ_PORT = 5672  # Default RabbitMQ port
-RABBITMQ_USER = 'guest'
-RABBITMQ_PASSWORD = 'guest'
 
-
+# CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 CELERY_RESULT_BACKEND = 'rpc://'
-# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True

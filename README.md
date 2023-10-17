@@ -53,6 +53,8 @@ Before you begin, ensure you have met the following requirements:
   <li>Run the development server: <br />python manage.py runserver</li>
 </ol>
 
+<p>After installing run  python ```shell manage.py manage_groups to create User Groups</p>
+
 
 <h2> Technologies Used </h2>
 <ul>

@@ -74,27 +74,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'interview_management_system.wsgi.application'
 # ASGI_APPLICATION = 'interview_management_system.asgi.application'
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.getenv('DB_NAME', None),
-#         "USER": os.getenv('DB_USER', None),
-#         "PASSWORD": os.getenv('DB_PASSWORD', None),
-#         "HOST": os.getenv('DB_HOST', None),
-#         "PORT": os.getenv('DB_PORT', '5432'),
-#     }
-# }
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "interview_management_system_db",
-        "USER": "postgres-user",
-        "PASSWORD": "password",
-        "HOST": "postgres",
-        "PORT": '5432',
+        "NAME": os.getenv('DB_NAME', None),
+        "USER": os.getenv('DB_USER', None),
+        "PASSWORD": os.getenv('DB_PASSWORD', None),
+        "HOST": os.getenv('DB_HOST', None),
+        "PORT": os.getenv('DB_PORT', '5432'),
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "interview_management_system_db",
+#         "USER": "postgres-user",
+#         "PASSWORD": "password",
+#         "HOST": "postgres",
+#         "PORT": '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -155,6 +155,12 @@ SPECTACULAR_SETTINGS = {
 }
 
 LOGIN_URL = 'login/'
+
+RABBITMQ_HOST = 'localhost'  # RabbitMQ server host
+RABBITMQ_PORT = 5672  # Default RabbitMQ port
+RABBITMQ_USER = 'guest'
+RABBITMQ_PASSWORD = 'guest'
+
 
 CELERY_RESULT_BACKEND = 'rpc://'
 # CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'

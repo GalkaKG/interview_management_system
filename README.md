@@ -53,7 +53,7 @@ Before you begin, ensure you have met the following requirements:
   <li>Run the development server: <br />python manage.py runserver</li>
 </ol>
 
-<p>After installing run <strong> python manage.py manage_groups </strong> to create User Groups</p>
+<p>After installing run <b> 'python manage.py manage_groups' </b> to create User Groups</p>
 
 
 <h2> Technologies Used </h2>
@@ -64,6 +64,26 @@ Before you begin, ensure you have met the following requirements:
   <li>RabbitMQ</li>
   <li>HTML, CSS, JavaScript</li>
 </ul>
+
+<h2>Use the website API</h2>
+
+[//]: # (<p>To get JWT Token send POST request to : http://3.121.115.133/gettoken/   with your email and password details.)
+
+[//]: # (Visit the Api link in the site</p>)
+<h3>Obtain JWT Token</h3>
+<p>To get a JWT token, send a POST request to: https://example.com/gettoken/ with your email and password details in the request body. Use the following format:</p>
+
+<pre>
+POST https:http://3.121.115.133/gettoken/
+Content-Type: application/json
+
+{
+    "email": "your@email.com",
+    "password": "yourpassword"
+}
+</pre>
+
+<p>Upon a successful request, you will receive a JSON response containing the JWT token. Include this token in the headers of your subsequent API requests for authentication.</p>
 
 
 ## Contributing

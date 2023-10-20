@@ -25,46 +25,45 @@ services:
       POSTGRES_DB: interview_management_system_db
     env_file:
       - .env
-#    volumes:
-#      - ./postgresql:/var/lib/postgresql/data
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - web
-    volumes:
-      - ./static_root:/app/static_root/
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/logs:/var/log/nginx
-      - ./certbot/www:/var/www/certbot/:ro
-      - ./certbot/conf/:/etc/nginx/ssl/:ro
-    links:
-      - web
-  rabbit:
-    image: rabbitmq:latest
+      
+  # nginx:
+  #   image: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   depends_on:
+  #     - web
+  #   volumes:
+  #     - ./static_root:/app/static_root/
+  #     - ./nginx/conf.d:/etc/nginx/conf.d
+  #     - ./nginx/logs:/var/log/nginx
+  #     - ./certbot/www:/var/www/certbot/:ro
+  #     - ./certbot/conf/:/etc/nginx/ssl/:ro
+  #   links:
+  #     - web
+  # rabbit:
+  #   image: rabbitmq:latest
 
-  celery-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    command: sh -c "celery -A interview_management_system worker -l info"
-    depends_on:
-      - web
-      - rabbit
+  # celery-worker:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - .env
+  #   command: sh -c "celery -A interview_management_system worker -l info"
+  #   depends_on:
+  #     - web
+  #     - rabbit
 
-  celery-beat:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: sh -c "celery -A interview_management_system beat -l info"
-    env_file:
-      - .env
-    depends_on:
-      - web
+  # celery-beat:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: sh -c "celery -A interview_management_system beat -l info"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - web
 
 
 

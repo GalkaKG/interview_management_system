@@ -121,7 +121,7 @@ def delete_interview(request, pk):
 
     if request.method == 'POST':
         interview.delete()
-        return redirect('home')
+        return redirect('interviews list')
 
     return render(request, 'interview-management/confirm-delete-interview.html', {'interview': interview})
 

@@ -10,6 +10,9 @@
 # Run Celery on Linux
 # celery -A interview_management_system worker -l info
 
+# I need to run Celery with this command on my computer
+# celery -A interview_management_system worker -l info --pool=solo
+
 # Run Celery beat
 # celery -A interview_management_system beat -l info
 

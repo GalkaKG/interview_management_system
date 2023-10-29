@@ -8,11 +8,6 @@ logger = get_task_logger(__name__)
 
 
 @shared_task
-def add(x, y):
-    return x + y
-
-
-@shared_task
 def delete_completed_interviews():
     completed_interviews = Interview.objects.filter(status='Completed')
 
@@ -64,4 +59,3 @@ def update_interview_statuses():
 
     logger.info("Celery task update_interview_statuses finished")
 
-# @shared_task

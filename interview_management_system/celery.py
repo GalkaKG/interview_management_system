@@ -12,17 +12,3 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 
-@app.task(bind=True)
-def debug_task(self):
-    print(f"Request: {self.request!r}")
-
-# app.conf.beat_schedule = {
-#     'add': {
-#         'task': 'interview_management_system.management_system.tasks.add',
-#         'schedule': crontab(minute='0', hour='0'),
-#     },
-# 'enable-scheduler': {
-#     'task': 'celery.beat.Beat',
-#     'schedule': timedelta(seconds=10),
-# },
-# }

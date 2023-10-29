@@ -157,28 +157,20 @@ SPECTACULAR_SETTINGS = {
 LOGIN_URL = 'login/'
 
 
-# CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 CELERY_RESULT_BACKEND = 'rpc://'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 CELERY_BEAT_SCHEDULE = {
     'update_interview_statuses': {
         'task': 'interview_management_system.interview_management.tasks.update_interview_statuses',
-        'schedule': crontab(minute='*/1'),  # Adjust the schedule as needed
+        'schedule': crontab(minute='*'),  # Every 1 minute
     },
     'delete_completed_interviews': {
         'task': 'interview_management_system.interview_management.tasks.delete_completed_interviews',
         'schedule': crontab(minute='*'),  # Every 1 minute
     },
-    'add': {
-        'task': 'interview_management_system.interview_management.tasks.add',
-        'schedule': timedelta(seconds=60),  # Run the task every 60 seconds
-    },
 }
-

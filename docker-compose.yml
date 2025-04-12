@@ -1,69 +1,49 @@
-version: '3.4'
+#version: '3.4'
+#
+#services:
+#  web:
+#    image: interview_management_system
+#    command: gunicorn interview_management_system.wsgi:application --bind 0.0.0.0:8000
+#    build: .
+#    volumes:
+#      - /tmp/interview_management_system/static_root:/app/static
+#    ports:
+#      - "8000:8000"
+#    env_file:
+#      - .env
+#    links:
+#      - postgres
+#
+#  postgres:
+#    image: postgres
+#    restart: always
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_USER: postgres-user
+#      POSTGRES_DB: interview_management_system_db
+#    env_file:
+#      - .env
+
 
 services:
-  web:
-    image: galka777/interview_management_system
-    command: gunicorn interview_management_system.wsgi:application --bind 0.0.0.0:8000
-    build: .
-    volumes:
-      - /tmp/interview_management_system/static_root:/app/static
-    ports:
-      - "8000:8000"
+  user-service:
+    build: ./user_service
     env_file:
-      - .env
-    links:
-      - postgres
-
-  postgres:
-    image: postgres
-    restart: always
+      - ./user_service/.env
+    depends_on:
+      - user-db
     ports:
-      - "5432:5432"
+      - "8001:8000"
+  user-db:
+    image: postgres:14
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: postgres-user
-      POSTGRES_DB: interview_management_system_db
-    env_file:
-      - .env
-      
-  # nginx:
-  #   image: nginx
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   depends_on:
-  #     - web
-  #   volumes:
-  #     - ./static_root:/app/static_root/
-  #     - ./nginx/conf.d:/etc/nginx/conf.d
-  #     - ./nginx/logs:/var/log/nginx
-  #     - ./certbot/www:/var/www/certbot/:ro
-  #     - ./certbot/conf/:/etc/nginx/ssl/:ro
-  #   links:
-  #     - web
-  # rabbit:
-  #   image: rabbitmq:latest
-
-  # celery-worker:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   env_file:
-  #     - .env
-  #   command: sh -c "celery -A interview_management_system worker -l info"
-  #   depends_on:
-  #     - web
-  #     - rabbit
-
-  # celery-beat:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   command: sh -c "celery -A interview_management_system beat -l info"
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - web
-
-
+      POSTGRES_DB: users
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
 

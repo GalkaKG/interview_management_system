@@ -1,7 +1,7 @@
-fastapi
-uvicorn[standard]
-sqlalchemy
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
 psycopg2-binary
-passlib[bcrypt]
-python-jose[cryptography]
-alembic
+python-dotenv
+bcrypt
+PyJWT
